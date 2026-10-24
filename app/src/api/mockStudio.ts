@@ -434,7 +434,8 @@ function emitBuild() {
   for (const l of buildListeners) l(building && { ...building, lines: [...building.lines] });
 }
 
-function runBuild(kit: string, options: BuildOptions, from = 0) {
+/** `failAt` names the step a preview build fails at. */
+function runBuild(kit: string, options: BuildOptions, from = 0, failAt?: string) {
   const steps = options.variant === "stock" ? [...STOCK_STEPS] : STEPS.filter((s) => s !== "release-gsi" || options.variant === "release");
   if (options.variant === "debug") steps.splice(4, 0, "debug-gsi");
   const started = Math.floor(Date.now() / 1000) - from * 9;
@@ -451,6 +452,7 @@ function runBuild(kit: string, options: BuildOptions, from = 0) {
     if (i >= steps.length) {
       const id = new Date().toISOString().slice(0, 19).replace(/[-:]/g, "").replace("T", "-");
       const r = record(id, started, options, { kind: "done" }, Math.floor(Date.now() / 1000) - started, kit);
+      r.steps = steps.map((n) => ({ name: n, secs: 9 }));
       builds = [r, ...builds];
       building = null;
       emitBuild();
@@ -459,6 +461,17 @@ function runBuild(kit: string, options: BuildOptions, from = 0) {
     }
     const name = steps[i]!;
     i += 1;
+    if (name === failAt) {
+      const id = new Date().toISOString().slice(0, 19).replace(/[-:]/g, "").replace("T", "-");
+      const tail = [...building.lines.slice(-4), `== ${i} ${name}`, "dex2oat: services.jar: 7 failures", `${name}.sh: exit 1`];
+      const r = record(id, started, options, { kind: "failed", step: name, tail, code: 1 }, Math.floor(Date.now() / 1000) - started, kit);
+      r.steps = steps.slice(0, i - 1).map((n) => ({ name: n, secs: 9 }));
+      builds = [r, ...builds];
+      building = null;
+      emitBuild();
+      for (const l of buildDoneListeners) l({ record: r, error: null });
+      return;
+    }
     building = {
       ...building,
       id: building.id ?? "pending",
@@ -474,7 +487,12 @@ function runBuild(kit: string, options: BuildOptions, from = 0) {
   buildTimer = window.setTimeout(tick, from ? 900 : 1200);
 }
 
-if (typeof location !== "undefined" && new URLSearchParams(location.search).has("building")) runBuild("nw-zx500-android13", { variant: "release", root: false }, 11);
+// `?building` runs the rest of a build; `=fail` stops it at a step, `=a50` runs the storage kit.
+if (typeof location !== "undefined" && new URLSearchParams(location.search).has("building")) {
+  const how = new URLSearchParams(location.search).get("building");
+  if (how === "a50") runBuild("nw-a50-android5", { variant: "release", root: false }, 16);
+  else runBuild("nw-zx500-android13", { variant: "release", root: false }, 11, how === "fail" ? "odex-gsi" : undefined);
+}
 
 const hostChecks: HostCheck[] = [
   ...["bash", "tar", "debugfs", "dumpe2fs", "e2fsck", "resize2fs", "patchelf", "python3", "java", "curl", "unzip", "zip", "xz", "ar", "openssl"].map((name) => ({ kind: "tool" as const, name, ok: true, found: `/usr/bin/${name}` })),

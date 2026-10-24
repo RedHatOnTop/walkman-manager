@@ -1,4 +1,4 @@
-/* Device page: the player spotlit beside its name, details in tiles below. */
+/* Device page: the player beside its name, then the details as a spec sheet. */
 
 .hero {
   position: relative;
@@ -40,14 +40,9 @@
   animation: page-in var(--slow) var(--ease);
 }
 
-.segmented--small {
-  padding: 3px;
-}
-
 .segmented--small button {
-  height: 28px;
-  padding: 0 14px;
-  font-size: 12.5px;
+  height: 26px;
+  font-size: 13px;
 }
 
 .hero-info {
@@ -87,13 +82,24 @@
   font-weight: 550;
 }
 
-.hero-note {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 6px;
+.fn-mark {
+  margin-left: 4px;
+  font-size: 0.4em;
+  font-weight: 500;
+  vertical-align: 1.3em;
+  color: var(--text-3);
+}
+
+/* A spec sheet's footnote: what a mark in the sheet means. */
+.footnote {
+  margin-top: 22px;
   font-size: 12.5px;
   color: var(--text-3);
+}
+
+.footnote sup {
+  font-size: 1em;
+  vertical-align: 0;
 }
 
 .specs.hero-spec {
@@ -173,53 +179,68 @@
   }
 }
 
-/* Tiles ------------------------------------------------------------------- */
+/* The spec sheet ----------------------------------------------------------- */
 
-.bento {
+/* Each section is a row under a rule: its title in the margin, the readings beside it. */
+.doc {
+  display: flex;
+  flex-direction: column;
+}
+
+.sec {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: 210px minmax(0, 1fr);
+  column-gap: 40px;
+  min-width: 0;
+  padding: 18px 0 38px;
+  border-top: 1px solid var(--line-3);
 }
 
-.bento > .sec--output {
-  grid-column: span 7;
+.sec-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
 }
 
-.bento > .sec--power {
-  grid-column: span 5;
+.sec-title {
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
 }
 
-.bento > .sec--storage,
-.bento > .sec--music {
-  grid-column: span 6;
+.sec-aside {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.bento > .sec--system {
-  grid-column: 1 / -1;
+.sec-body {
+  min-width: 0;
+  padding-top: 3px;
 }
 
-.bento-stack {
-  display: contents;
+.sec-note {
+  font-size: 13px;
+  color: var(--text-3);
 }
 
-.bento-stack > .sec {
-  grid-column: span 6;
-}
-
-.bento > .skeleton {
-  grid-column: span 5;
+.doc > .skeleton {
   height: 260px;
-}
-
-.bento > .skeleton--wide {
-  grid-column: span 7;
+  border-top: 1px solid var(--line-3);
 }
 
 @media (max-width: 1100px) {
-  .bento > .sec,
-  .bento > .skeleton,
-  .bento-stack > .sec {
-    grid-column: 1 / -1;
+  .sec {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+  }
+  .sec-head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
@@ -233,37 +254,6 @@
   to {
     background-position: -150% 0;
   }
-}
-
-.sec {
-  min-width: 0;
-  padding: 22px 26px 26px;
-}
-
-.sec-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 28px;
-  margin-bottom: 18px;
-}
-
-.sec-aside {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.sec-title {
-  font-size: 15px;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  color: var(--text-2);
-}
-
-.sec-note {
-  font-size: 13px;
-  color: var(--text-3);
 }
 
 /* Output ------------------------------------------------------------------ */
@@ -365,6 +355,10 @@
   gap: 18px;
 }
 
+.sec--power .meter {
+  max-width: 560px;
+}
+
 /* Battery level as a row of cells, the way a charger or an amp shows it. */
 .meter {
   display: flex;
@@ -404,10 +398,11 @@
   background: var(--warn);
 }
 
-.vols {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
+.vols,
+.music-vols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 26px 48px;
 }
 
 .vol-head {
@@ -423,10 +418,6 @@
   gap: 8px;
   font-size: 13.5px;
   font-weight: 650;
-}
-
-.vol-name svg {
-  color: var(--text-3);
 }
 
 .vol-total {
@@ -508,12 +499,6 @@
 }
 
 /* Music -------------------------------------------------------------------- */
-
-.music-vols {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-}
 
 .music-vol {
   display: flex;
@@ -640,13 +625,6 @@
 
 .spec.is-live dd {
   color: var(--signal);
-}
-
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
 }
 
 .inline {

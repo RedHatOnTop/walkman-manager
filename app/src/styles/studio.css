@@ -685,8 +685,20 @@
   color: var(--text-3);
 }
 
-.dock-go {
+.dock-gos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-left: auto;
+}
+
+.dock-made {
+  margin-right: 6px;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.dock-go {
   min-width: 132px;
 }
 
@@ -730,6 +742,11 @@
   font-size: 13px;
   font-weight: 650;
   color: var(--text-1);
+}
+
+.dock-back-act {
+  display: flex;
+  gap: 8px;
 }
 
 .dock-back-what {
@@ -1034,4 +1051,99 @@
   font-size: 13px;
   color: var(--text-3);
   text-align: center;
+}
+
+/* A build ending: a large sheet over whatever page is open, the finished strip under its title. */
+.bdone {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  width: min(880px, 100vw - var(--sidebar-w) - 64px);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.bdone-object {
+  display: grid;
+  place-items: center;
+  min-height: 460px;
+  overflow: hidden;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.2));
+  box-shadow: inset -1px 0 0 var(--line);
+}
+
+.bdone-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+  padding: 44px 44px 36px;
+}
+
+.bdone-title {
+  font-size: 36px;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.bdone-strip {
+  height: 6px;
+  margin-top: -4px;
+}
+
+.bdone-strip span.is-done {
+  background: var(--text-1);
+}
+
+.bdone-strip span.is-bad {
+  background: var(--warn);
+}
+
+.bdone-specs {
+  grid-template-columns: 1fr;
+}
+
+.bdone-bad {
+  color: var(--warn);
+}
+
+.bdone .brun-log {
+  max-height: none;
+}
+
+.bdone-error {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--warn);
+}
+
+.bdone-note {
+  max-width: 470px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-3);
+}
+
+.bdone-act {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.bdone-go {
+  min-width: 168px;
+  height: 46px;
+  padding: 0 24px;
+  font-size: 15px;
+}
+
+@media (max-width: 1100px) {
+  .bdone {
+    grid-template-columns: 1fr;
+  }
+
+  .bdone-object {
+    display: none;
+  }
 }

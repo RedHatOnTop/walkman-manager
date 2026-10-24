@@ -15,12 +15,12 @@ export function label(t: ReturnType<typeof useT>, key: string, fallback: string)
 
 export function Section({ kind, title, aside, children }: { kind: string; title: string; aside?: ReactNode; children: ReactNode }) {
   return (
-    <section className={`tile sec sec--${kind}`}>
+    <section className={`sec sec--${kind}`}>
       <header className="sec-head">
         <h2 className="sec-title">{title}</h2>
         {aside && <div className="sec-aside">{aside}</div>}
       </header>
-      {children}
+      <div className="sec-body">{children}</div>
     </section>
   );
 }
@@ -147,7 +147,6 @@ export function StorageSection({ snapshot, deviceId, exported }: { snapshot: Sna
             <div className="vol" key={v.mount}>
               <div className="vol-head">
                 <span className="vol-name">
-                  <Icon name={v.kind === "card" ? "card" : "chip"} size={16} />
                   {t(v.kind === "card" ? "storage.card" : "storage.internal")}
                   <span className="tag mono">{v.filesystem === "vfat" ? "FAT32" : v.filesystem}</span>
                 </span>
@@ -179,7 +178,6 @@ export function StorageSection({ snapshot, deviceId, exported }: { snapshot: Sna
         {!hasCard && vols.length > 0 && (
           <div className="vol vol--absent">
             <span className="vol-name">
-              <Icon name="card" size={16} />
               {t("storage.cardMissing")}
             </span>
           </div>
@@ -233,11 +231,11 @@ export function SystemSection({ snapshot, profile }: { snapshot: Snapshot; profi
           [t("system.firmware"), firmware],
           [t("system.buildId"), android ? s.buildId : null, "mono selectable"],
           [t("system.buildType"), android ? s.buildType : null, "mono"],
-          [t("system.securityPatch"), android ? s.securityPatch : null, "mono num"],
+          [t("system.securityPatch"), android ? s.securityPatch : null, "num"],
           [t("system.vendorFirmware"), s.vendorFirmware, "mono"],
           [t("system.kernel"), s.kernel, "mono selectable"],
-          [t("system.kernelDate"), s.kernelDate, "mono"],
-          [t("system.slot"), s.slot?.toUpperCase(), "mono"],
+          [t("system.kernelDate"), s.kernelDate, "num"],
+          [t("system.slot"), s.slot?.toUpperCase()],
           [
             t("system.bootloader"),
             s.bootloaderUnlocked == null ? null : (
@@ -247,7 +245,7 @@ export function SystemSection({ snapshot, profile }: { snapshot: Snapshot; profi
               </span>
             ),
           ],
-          [t("system.verifiedBoot"), s.verifiedBoot, "mono"],
+          [t("system.verifiedBoot"), s.verifiedBoot],
           [
             t("system.container"),
             s.container ? (
@@ -264,7 +262,7 @@ export function SystemSection({ snapshot, profile }: { snapshot: Snapshot; profi
                 ? `${kib(snapshot.memory.availableKb, lang)} / ${kib(snapshot.memory.totalKb, lang)}`
                 : kib(snapshot.memory.totalKb, lang)
               : null,
-            "mono num",
+            "num",
           ],
         ]}
       />
@@ -282,8 +280,8 @@ export function HardwareSection({ profile }: { profile: Profile }) {
           [t("hardware.soc"), profile.soc],
           [t("hardware.dac"), profile.dac],
           [t("hardware.display"), profile.display],
-          [t("hardware.body"), `${w} × ${h} × ${d} mm`, "mono num"],
-          [t("hardware.mass"), `${profile.massG} g`, "mono num"],
+          [t("hardware.body"), `${w} × ${h} × ${d} mm`, "num"],
+          [t("hardware.mass"), `${profile.massG} g`, "num"],
         ]}
       />
     </Section>
@@ -295,18 +293,11 @@ export function ConnectionSection({ device }: { device: DeviceSummary }) {
   const [reveal, setReveal] = useState(false);
   return (
     <Section kind="connection" title={t("section.connection")}>
-      <div className="links">
-        {device.links.map((l) => (
-          <span className="chip" key={l}>
-            <Icon name={l === "mass-storage" || l === "mtp" ? "card" : l.startsWith("adb") ? "link" : "usb"} size={14} />
-            {t(`link.${l}`)}
-          </span>
-        ))}
-      </div>
       <Rows
         rows={[
-          [t("connection.port"), device.usb?.port, "mono"],
-          [t("connection.speed"), device.usb?.speed, "mono"],
+          [t("connection.link"), device.links.map((l) => t(`link.${l}`)).join(" · ")],
+          [t("connection.port"), device.usb?.port, "num"],
+          [t("connection.speed"), device.usb?.speed, "num"],
           [t("connection.usbId"), device.usb ? usbId(device.usb.vid, device.usb.pid) : null, "mono"],
           [
             t("connection.serial"),

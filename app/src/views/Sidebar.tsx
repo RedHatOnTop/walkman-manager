@@ -1,4 +1,3 @@
-import { BrandMark } from "../components/BrandMark";
 import { Icon } from "../components/Icon";
 import { useT } from "../i18n";
 import type { Route } from "../routes";
@@ -91,19 +90,6 @@ export function Sidebar({ route, go }: Props) {
 
   return (
     <aside className="sidebar">
-      <div className="brand">
-        <BrandMark />
-        <div className="brand-text">
-          <span className="brand-top">
-            {t("brand.top")}
-            <span className="brand-stage" title={t("brand.stageNote")}>
-              {t("brand.stage")}
-            </span>
-          </span>
-          <span className="brand-name">{t("brand.name")}</span>
-        </div>
-      </div>
-
       <nav className="side-nav" aria-label={t("nav.devices")}>
         <button className={`side-link${route.kind === "home" ? " is-active" : ""}`} onClick={() => go({ kind: "home" })}>
           <Icon name="player" size={19} />
@@ -155,6 +141,9 @@ export function Sidebar({ route, go }: Props) {
           <Icon name="dial" />
           <span>{t("nav.settings")}</span>
         </button>
+        <span className="side-stage" title={t("brand.stageNote")}>
+          {t("brand.stage")}
+        </span>
         {env && <span className="side-version mono">v{env.version}</span>}
       </div>
     </aside>

@@ -183,8 +183,8 @@ Before the repository goes public (it is private on GitHub until then):
   weights from the clustering code's literal pool and the 68 thresholds from the mood tests'
   `cmp` and `sub` immediates. `library/sensme.rs` keeps the offsets and how the tests combine,
   no values. A table saved by an earlier build asks for the file again.
-- The public repository's first two commits (4a7a0c8, 4783135) carry the notes and the
-  tables: before the flip it starts again from a fresh root, which is a force-push (the
+- ~~The public repository's first two commits carried the notes and the tables~~: the
+  repository was deleted and made again from a fresh root without them (2026-10-24, the
   user's word).
 - ~~A README for owners~~: `public/README.md` replaces this one in the public repository
   (2026-10-23): what runs, on which players, what has not been run (the Unlock stage above

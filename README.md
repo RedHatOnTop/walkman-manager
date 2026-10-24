@@ -4,7 +4,7 @@ A desktop manager for Sony Walkman players on Linux: what the player is doing ri
 your music on the computer and on the player, and newer Android built from your own files
 and installed from the app. "Ultimate Walkman Manager" is a working name.
 
-**Alpha: not a stable release.** Every flow below has run on one player of each model, the
+**Beta: not a stable release.** Every flow below has run on one player of each model, the
 author's, from a Fedora 44 desktop, and nowhere else. The Android it installs is not stable
 either: the NW-A50 series' is alpha ([walkman-a55](https://github.com/RedHatOnTop/walkman-a55)),
 the NW-ZX500's beta ([walkman-zx507](https://github.com/RedHatOnTop/walkman-zx507)). Expect

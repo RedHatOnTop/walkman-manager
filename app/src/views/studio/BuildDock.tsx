@@ -8,14 +8,18 @@ import type { Route } from "../../routes";
 import { useData } from "../../state/data";
 import { LicenceSheet } from "./LicenceSheet";
 
-function clock(secs: number): string {
+export function clock(secs: number): string {
   const s = Math.max(0, Math.round(secs));
   const m = Math.floor(s / 60);
   return `${m}:${String(s % 60).padStart(2, "0")}`;
 }
 
+function when(secs: number, lang: ReturnType<typeof usePrefs>["lang"]): string {
+  return new Date(secs * 1000).toLocaleString(lang === "ko" ? "ko-KR" : "en-GB", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
 /** A step's own name when the app has a sentence for it, else the kit's word for it. */
-function stepName(name: string, t: ReturnType<typeof usePrefs>["t"]): { text: string; raw: boolean } {
+export function stepName(name: string, t: ReturnType<typeof usePrefs>["t"]): { text: string; raw: boolean } {
   const key = `build.step.${name}` as StringKey;
   const said = t(key);
   return said === key ? { text: name, raw: true } : { text: said, raw: false };
@@ -36,7 +40,7 @@ function Row({ label, state, children, action }: { label: string; state: "ok" | 
 
 /** What a kit's build needs besides the files: the kit itself, the player's key, the licence of
  * what the kit downloads, this computer. */
-export function BuildDock({ kit, view, onView, onError }: { kit: Kit; view: StudioView; onView(v: StudioView): void; onError(e: ErrorReport): void }) {
+export function BuildDock({ kit, view, go, onView, onError }: { kit: Kit; view: StudioView; go(r: Route): void; onView(v: StudioView): void; onError(e: ErrorReport): void }) {
   const { t, lang } = usePrefs();
   const { scan } = useData();
   const [host, setHost] = useState<{ checks: HostCheck[]; ok: boolean } | null>(null);
@@ -80,6 +84,11 @@ export function BuildDock({ kit, view, onView, onError }: { kit: Kit; view: Stud
   const ready = kit.ready && repoOk && (!keyNeeded || key) && (!licenceNeeded || agreed) && !!host?.ok && (options.variant === "release" || !!adbKey?.ok);
   // Going back takes the UPG and the key, not the licence: it downloads nothing.
   const backReady = kit.restore === true && repoOk && (!keyNeeded || key) && !!host?.ok;
+  // The newest set this kit made with these options, so the dock goes on to installing it.
+  const made = view.builds.find(
+    (r) => r.kit === kit.id && r.outcome.kind === "done" && !!(r.set || r.storage) && r.options.variant === options.variant && (options.variant !== "release" || r.options.root === options.root),
+  );
+  const madeBack = view.builds.find((r) => r.kit === kit.id && r.outcome.kind === "done" && !!r.set && r.options.variant === "stock");
 
   return (
     <div className="dock">
@@ -188,10 +197,25 @@ export function BuildDock({ kit, view, onView, onError }: { kit: Kit; view: Stud
         ) : (
           <span className="dock-note">{adbKey?.ok ? t("build.debug.note") : t("build.debug.noKey")}</span>
         )}
-        <button className={`btn dock-go${kit.ready ? " btn--primary" : ""}`} onClick={() => build(options)} disabled={!ready}>
-          <Icon name="firmware" size={16} />
-          {t("build.start")}
-        </button>
+        <div className="dock-gos">
+          {made && <span className="dock-made num">{t("build.made", { when: when(made.started, lang) })}</span>}
+          {made ? (
+            <>
+              <button className="btn btn--ghost" onClick={() => build(options)} disabled={!ready}>
+                {t("build.again")}
+              </button>
+              <button className="btn btn--primary dock-go" onClick={() => go({ kind: "install", build: made.id })}>
+                <Icon name="send" size={16} />
+                {t("build.install")}
+              </button>
+            </>
+          ) : (
+            <button className={`btn dock-go${kit.ready ? " btn--primary" : ""}`} onClick={() => build(options)} disabled={!ready}>
+              <Icon name="firmware" size={16} />
+              {t("build.start")}
+            </button>
+          )}
+        </div>
       </div>
       <p className="dock-what">{kit.set === "storage" ? t("build.storage.what") : t(`build.variant.${options.variant}.what` as StringKey)}</p>
       {kit.restore !== null && (
@@ -203,9 +227,17 @@ export function BuildDock({ kit, view, onView, onError }: { kit: Kit; view: Stud
             <span className="dock-back-title">{t("build.back")}</span>
             <span className="dock-back-what">{backReady ? t("build.back.what") : t("build.back.needs")}</span>
           </div>
-          <button className="btn btn--small btn--ghost" onClick={() => build({ variant: "stock", root: false })} disabled={!backReady}>
-            {t("build.back.start")}
-          </button>
+          <span className="dock-back-act">
+            <button className="btn btn--small btn--ghost" onClick={() => build({ variant: "stock", root: false })} disabled={!backReady}>
+              {madeBack ? t("build.back.again") : t("build.back.start")}
+            </button>
+            {madeBack && (
+              <button className="btn btn--small" onClick={() => go({ kind: "install", build: madeBack.id })}>
+                <Icon name="back" size={14} />
+                {t("build.back.go")}
+              </button>
+            )}
+          </span>
         </div>
       )}
       {licence && (
@@ -286,12 +318,7 @@ export function Builds({ view, go, onView, onError }: { view: StudioView; go(r: 
           const secs = r.ended ? r.ended - r.started : null;
           const files = r.set?.files ?? r.storage?.files;
           const size = files ? Object.values(files).reduce((a, f) => a + f.bytes, 0) : 0;
-          const date = new Date(r.started * 1000).toLocaleString(lang === "ko" ? "ko-KR" : "en-GB", {
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+          const date = when(r.started, lang);
           return (
             <article key={r.id} className={`tile build build--${r.outcome.kind}`}>
               <div className="build-main">

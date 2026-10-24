@@ -40,7 +40,6 @@ function VolumeRow({ v, library }: { v: VolumeMusic; library: Set<string> }) {
     <div className="music-vol">
       <div className="music-vol-head">
         <span className="vol-name">
-          <Icon name={v.kind === "card" ? "card" : "chip"} size={16} />
           {t(v.kind === "card" ? "storage.card" : "storage.internal")}
         </span>
         <span className="music-vol-root mono">{v.root}</span>

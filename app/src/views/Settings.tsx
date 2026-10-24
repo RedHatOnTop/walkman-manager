@@ -17,24 +17,6 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
   );
 }
 
-function ThemeCards({ value, onChange, label }: { value: ThemePref; onChange(v: ThemePref): void; label: string }) {
-  const t = useT();
-  return (
-    <div className="theme-cards" role="radiogroup" aria-label={label}>
-      {(["system", "dark", "light"] as const).map((v) => (
-        <button key={v} role="radio" aria-checked={v === value} className={`theme-card${v === value ? " is-on" : ""}`} onClick={() => onChange(v)}>
-          <span className={`theme-swatch theme-swatch--${v}`} aria-hidden="true">
-            <span className="theme-swatch-side" />
-            <span className="theme-swatch-tile" />
-            <span className="theme-swatch-dot" />
-          </span>
-          <span className="theme-card-name">{t(`settings.theme.${v}`)}</span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export function Settings() {
   const t = useT();
   const { lang, setLang, theme, setTheme } = usePrefs();
@@ -50,9 +32,14 @@ export function Settings() {
         </div>
       </header>
 
-      <div className="settings-grid">
+      <div className="doc">
         <Section kind="theme" title={t("settings.theme")}>
-          <ThemeCards label={t("settings.theme")} value={theme} onChange={setTheme} />
+          <Segmented<ThemePref>
+            label={t("settings.theme")}
+            value={theme}
+            onChange={setTheme}
+            options={(["system", "dark", "light"] as const).map((v) => [v, t(`settings.theme.${v}`)])}
+          />
         </Section>
 
         <Section kind="language" title={t("settings.language")}>

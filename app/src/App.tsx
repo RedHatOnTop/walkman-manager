@@ -6,6 +6,7 @@ import { DevicePage } from "./views/device/DevicePage";
 import { Home } from "./views/Home";
 import { LibraryPage } from "./views/library/LibraryPage";
 import { InstallPage } from "./views/install/InstallPage";
+import { BuildFinished } from "./views/studio/BuildFinished";
 import { StudioPage } from "./views/studio/StudioPage";
 import { Settings } from "./views/Settings";
 import { Sidebar } from "./views/Sidebar";
@@ -68,6 +69,7 @@ export function App() {
           <Settings />
         )}
       </main>
+      {ready && <BuildFinished route={route} go={go} />}
     </div>
   );
 }

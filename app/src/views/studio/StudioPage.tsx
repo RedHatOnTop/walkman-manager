@@ -115,6 +115,7 @@ function KitBench({
   kit,
   view,
   busy,
+  go,
   onFetch,
   onOpen,
   onView,
@@ -123,6 +124,7 @@ function KitBench({
   kit: Kit;
   view: StudioView;
   busy: boolean;
+  go(r: Route): void;
   onFetch(id: string): void;
   onOpen(id: string): void;
   onView(v: StudioView): void;
@@ -156,7 +158,7 @@ function KitBench({
           ))}
         </div>
         {kit.buildable && view.building?.kit === kit.id && <BuildRun progress={view.building} />}
-        {kit.buildable && !view.building && <BuildDock kit={kit} view={view} onView={onView} onError={onError} />}
+        {kit.buildable && !view.building && <BuildDock kit={kit} view={view} go={go} onView={onView} onError={onError} />}
       </div>
     </article>
   );
@@ -303,8 +305,6 @@ export function StudioPage({ go }: { go(r: Route): void }) {
         b.onStudioBuildDone((d) => {
           if (d.error) setError(d.error);
           reload();
-          // A stock set is only ever made to go back with, so the page goes on to that.
-          if (d.record?.options.variant === "stock" && d.record.outcome.kind === "done") go({ kind: "install", build: d.record.id });
         }),
         b.onFileDrop((e) => {
           setOver(e.over);
@@ -313,7 +313,7 @@ export function StudioPage({ go }: { go(r: Route): void }) {
       );
     });
     return () => offs.forEach((o) => void o.then((f) => f()));
-  }, [reload, add, go]);
+  }, [reload, add]);
 
   const pick = () =>
     begin(() =>
@@ -375,7 +375,7 @@ export function StudioPage({ go }: { go(r: Route): void }) {
       <section className="studio-kits" aria-label={t("studio.kits")}>
         {view &&
           kits.map((k) => (
-            <KitBench key={k.id} kit={k} view={view} busy={busy} onFetch={fetchFile} onOpen={open} onView={setView} onError={setError} />
+            <KitBench key={k.id} kit={k} view={view} busy={busy} go={go} onFetch={fetchFile} onOpen={open} onView={setView} onError={setError} />
           ))}
       </section>
 

@@ -22,9 +22,17 @@ Three rules follow.
    `dl.specs` of label | value rows with a hairline under each, at body size. The battery
    is drawn as the players draw it in their status bar (`components/Battery.tsx`) or as a
    20-cell meter; there are no ring gauges, KPI strips or big counters.
-3. Flat panels. A tile is `--tile` with a 1 px edge and radius 6–10; no gradients, inner
-   highlights, light from above, halos or status dots. Labels are sentence case at
-   12.5–13 px, never letter-spaced mono capitals.
+3. A sheet, not a dashboard. Pages that describe a player or the app are sections down
+   the page: a hairline across, the section's name in a 210 px column at the left, its
+   rows and controls at the right, no numbers in front of the names. Where a tile is
+   still used (the Studio, the install page) it is `--tile` with a 1 px edge and radius
+   6–10; no gradients, inner highlights, light from above, halos or status dots. Labels
+   are sentence case at 12.5–13 px, never letter-spaced mono capitals.
+
+Controls follow the same print. A choice between a few values is a row of words with the
+chosen one underlined in ink, not a pill. A tag is a plain word, several are joined by
+" · ". Buttons are square-cornered (2 px). A remark that qualifies a value is a footnote
+mark and a line below, not an info icon.
 
 ## Colour
 
@@ -88,18 +96,25 @@ the player's screen.
 
 ## Layout
 
-Sidebar 256 px; content up to 1320 px with 44 px gutters.
+Sidebar 256 px; content up to 1320 px with 44 px gutters. The sidebar carries no brand
+block: the window title names the app, the navigation starts on the page's top line, the
+current page is marked by an ink bar at the left edge, and the release stage ("Beta")
+sits beside the version at the foot with its note on hover.
 
 - Home: the players stand side by side (one player stands left of its name), each with
   its family, name, state and three spec rows; the latest albums sit on a shelf below.
 - Device: a hero (render left, family, name, state, spec rows, Send music + Refresh),
-  then a 12-column grid of tiles: Output 7 + Power 5, Storage 6 + Music 6, System 12,
-  Hardware 6 + Connection 6. Under 1100 px every tile takes the full width.
+  then the sections Output, Power, Storage, Music, System, Hardware, Connection. Under
+  1100 px a section's name sits above its body.
+- Settings: the same sections (theme, language, tools, about).
 - Library: the source switch (this computer, each player), the title and a line of
   counts, the folders; a sticky toolbar with Albums/SensMe, quality tabs, search and sort;
   a 190 px+ cover grid with hover actions. Album details and Send open as centred dialogs.
 - Firmware Studio: the title and lead with Add files, then one panel per kit (the player
-  at the left, a bay per file, "1 of 3 needed files" as a line) and the vault below.
+  at the left, a bay per file, "1 of 3 needed files" as a line) and the vault below. Once
+  a kit has a finished set its main button is Install. A build that ends opens a large
+  sheet over whatever page is open: the player, the filled step strip, the rows of the
+  set and Install.
 
 ## Motion
 

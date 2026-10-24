@@ -147,6 +147,7 @@ export function DevicePage({ id, go }: { id: string; go(route: Route): void }) {
   const showSnapshot = running && snapshot;
   const live = running && isPlaying(snapshot);
   const charging = running && snapshot?.power?.status === "Charging";
+  const byStorage = !!showSnapshot && snapshot.identity.modelBasis === "storage";
 
   return (
     <div className="page device-page">
@@ -188,15 +189,12 @@ export function DevicePage({ id, go }: { id: string; go(route: Route): void }) {
 
         <div className="hero-info">
           {family && <span className="eyebrow">{family}</span>}
-          <h1 className="hero-name">{name}</h1>
+          <h1 className="hero-name">
+            {name}
+            {byStorage && <sup className="fn-mark">*</sup>}
+          </h1>
           <div className={`hero-state hero-state--${tone}`}>
             <span className="hero-mode">{t(`mode.${mode}`)}</span>
-            {showSnapshot && snapshot.identity.modelBasis === "storage" && (
-              <span className="hero-note" title={t("device.modelByStorage")}>
-                <Icon name="info" size={14} />
-                {t("device.modelByStorage")}
-              </span>
-            )}
           </div>
 
           {showSnapshot && <HeroSpec snapshot={snapshot} />}
@@ -218,6 +216,11 @@ export function DevicePage({ id, go }: { id: string; go(route: Route): void }) {
               </span>
             </div>
           )}
+          {byStorage && (
+            <p className="footnote">
+              <sup>*</sup> {t("device.modelByStorage")}
+            </p>
+          )}
         </div>
       </section>
 
@@ -236,7 +239,7 @@ export function DevicePage({ id, go }: { id: string; go(route: Route): void }) {
         </div>
       )}
 
-      <div className={`bento${showSnapshot ? "" : " bento--bare"}`}>
+      <div className="doc">
         {showSnapshot && (
           <>
             <OutputSection snapshot={snapshot} />
@@ -248,14 +251,11 @@ export function DevicePage({ id, go }: { id: string; go(route: Route): void }) {
         )}
         {running && !snapshot && !error && (
           <>
-            <div className="tile skeleton skeleton--wide" aria-busy="true" />
-            <div className="tile skeleton" aria-busy="true" />
+            <div className="skeleton" aria-busy="true" />
           </>
         )}
-        <div className="bento-stack">
-          {profile && <HardwareSection profile={profile} />}
-          {device && <ConnectionSection device={device} />}
-        </div>
+        {profile && <HardwareSection profile={profile} />}
+        {device && <ConnectionSection device={device} />}
       </div>
     </div>
   );
