@@ -184,10 +184,8 @@
 /* Library shelf */
 
 .shelf {
-  padding: 26px 28px 30px;
-  border-radius: var(--r-5);
-  background: var(--tile);
-  box-shadow: var(--tile-shine), 0 0 0 1px var(--tile-edge);
+  padding-top: 18px;
+  border-top: 1px solid var(--line-3);
 }
 
 .shelf-head {
@@ -204,9 +202,21 @@
 }
 
 .shelf-title {
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 650;
-  letter-spacing: -0.025em;
+  color: var(--text-1);
+}
+
+.shelf-open {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.shelf-open:hover {
+  color: var(--text-1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .shelf-count {
@@ -245,14 +255,14 @@
 .shelf-cover {
   aspect-ratio: 1;
   margin-bottom: 6px;
-  border-radius: var(--r-2);
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: var(--shadow-2);
-  transition: transform var(--slow) var(--ease);
+  box-shadow: 0 0 0 1px var(--line);
 }
 
-.shelf-item:hover .shelf-cover {
-  transform: translateY(-3px);
+.shelf-item:hover .shelf-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .shelf-name {

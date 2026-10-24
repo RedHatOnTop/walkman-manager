@@ -171,13 +171,13 @@ function analysis(key: string, codec: Codec, durationMs: number): SensMe | undef
   if (!["mp3", "aac", "alac", "flac"].includes(codec)) return undefined;
   const h = hash(key);
   if (h % 3 === 0) return undefined;
-  const moods = new Set([5 + ((h >> 3) % 8)]);
-  if ((h >> 7) % 3 === 0) moods.add(5 + ((h >> 11) % 8));
+  const moods = new Set([5 + ((h >>> 3) % 8)]);
+  if ((h >>> 7) % 3 === 0) moods.add(5 + ((h >>> 11) % 8));
   return {
-    bpm: 62 + ((h >> 5) % 118) + ((h >> 13) % 100) / 100,
-    chorusMs: Math.round(durationMs * (0.3 + ((h >> 17) % 30) / 100)),
+    bpm: 62 + ((h >>> 5) % 118) + ((h >>> 13) % 100) / 100,
+    chorusMs: Math.round(durationMs * (0.3 + ((h >>> 17) % 30) / 100)),
     features: "32".repeat(86),
-    channels: sensmeTable ? [(h >> 1) % 5, ...[...moods].sort((a, b) => a - b)] : undefined,
+    channels: sensmeTable ? [(h >>> 1) % 5, ...[...moods].sort((a, b) => a - b)] : undefined,
   };
 }
 

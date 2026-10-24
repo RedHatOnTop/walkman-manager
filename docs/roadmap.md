@@ -150,8 +150,8 @@ Gate: a change made in the app is visible or audible on the player.
 ## P6 Product
 
 Packaging (rpm, deb, AppImage), an updater, first-run onboarding, a no-marks build without
-third-party logos, Windows and macOS (nusb, adb, fastboot and MTKClient all exist there),
-and a final name. The packages speak both languages too: the desktop entry's `Comment` and
+third-party logos, Windows and macOS (nusb, adb, fastboot and MTKClient all exist there).
+The packages speak both languages too: the desktop entry's `Comment` and
 `GenericName` in Korean beside English (`bundle.linux.*.desktopTemplate`), and the
 installers' own text where they have any.
 
@@ -159,8 +159,8 @@ Built 2026-10-21: the deb, rpm and AppImage from an Ubuntu 22.04 container
 (`spectre-run.sh bundle`); the deb requires Ubuntu's udev rule and recommends adb, fastboot
 and the Studio's tools, the rpm recommends the same, and the app downloads Google's
 platform-tools where the computer's own fall short (2026-10-22). Tried on fresh Ubuntu 24.04 and Fedora 44 VMs
-(`scripts/dev/vm.sh`), a whole build included. Not yet: the desktop entry in Korean, an
-updater, Windows and macOS.
+(`scripts/dev/vm.sh`), a whole build included. The desktop entry names and describes the app in Korean beside English since 2026-10-25
+(`app/src-tauri/linux/walkman-manager.desktop`). Not yet: an updater, Windows and macOS.
 
 Before the repository goes public (it is private on GitHub until then):
 
@@ -189,4 +189,7 @@ Before the repository goes public (it is private on GitHub until then):
 - ~~A README for owners~~: `public/README.md` replaces this one in the public repository
   (2026-10-23): what runs, on which players, what has not been run (the Unlock stage above
   all), how to build.
-- The name and the Walkman, Sony and Hi-Res marks in the interface.
+- ~~The name and the Walkman, Sony and Hi-Res marks~~: the name stays (user, 2026-10-24). The
+  marks appear only as words that name the players and a quality class, never as logos (the
+  renders draw no marks), and the app's About, the README and the packages' descriptions say
+  it is unofficial, community-made and not made or endorsed by Sony.

@@ -2,7 +2,8 @@
 
 A desktop manager for Sony Walkman players on Linux: what the player is doing right now,
 your music on the computer and on the player, and newer Android built from your own files
-and installed from the app. "Ultimate Walkman Manager" is a working name.
+and installed from the app. It is unofficial and community-made: not made by, affiliated with
+or endorsed by Sony.
 
 **Beta: not a stable release.** Every flow below has run on one player of each model, the
 author's, from a Fedora 44 desktop, and nowhere else. The Android it installs is not stable

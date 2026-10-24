@@ -30,15 +30,17 @@
     "active": true,
     "targets": ["appimage", "rpm", "deb"],
     "category": "Music",
-    "shortDescription": "Manager for Sony Walkman players",
-    "longDescription": "A desktop manager for Sony Walkman players: live device state, music sync, and a Firmware Studio that builds Android 13 for the NW-ZX500 series from the owner's own firmware and installs it over fastboot. Not made by or affiliated with Sony.\n\nSony Walkman 플레이어를 위한 데스크톱 관리 도구입니다. 기기 상태, 음악 동기화, 그리고 소유자의 펌웨어로 NW-ZX500 시리즈용 Android 13을 만들어 fastboot로 설치하는 펌웨어 스튜디오가 들어 있습니다. Sony가 만들거나 Sony와 관련된 프로그램이 아닙니다.",
+    "shortDescription": "Unofficial manager for Sony Walkman players",
+    "longDescription": "An unofficial, community-made desktop manager for Sony Walkman players: live device state, music and SensMe, and a Firmware Studio that builds newer Android from the owner's own files, Android 13 for the NW-ZX500 series installed over fastboot and Android 5.1 for the NW-A50 series copied onto the WALKMAN drive. Not made by, affiliated with or endorsed by Sony.\n\nSony Walkman 플레이어를 위해 커뮤니티가 만든 비공식 데스크톱 관리 앱입니다. 기기 상태, 음악과 SensMe, 그리고 소유자의 파일로 새 Android를 만드는 펌웨어 스튜디오가 들어 있습니다. NW-ZX500 시리즈용 Android 13은 fastboot로 설치하고, NW-A50 시리즈용 Android 5.1은 WALKMAN 드라이브에 복사합니다. Sony가 만들거나 보증한 프로그램이 아니며 Sony와 관련이 없습니다.",
     "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.png"],
     "linux": {
       "deb": {
+        "desktopTemplate": "linux/walkman-manager.desktop",
         "depends": ["android-sdk-platform-tools-common"],
         "recommends": ["adb", "fastboot", "e2fsprogs", "patchelf", "python3", "openjdk-17-jre-headless | java17-runtime-headless", "curl", "unzip", "zip", "xz-utils", "binutils", "openssl"]
       },
       "rpm": {
+        "desktopTemplate": "linux/walkman-manager.desktop",
         "recommends": ["android-tools", "e2fsprogs", "patchelf", "python3", "java-headless", "curl", "unzip", "zip", "xz", "binutils", "openssl"]
       }
     }

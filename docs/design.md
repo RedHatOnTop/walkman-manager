@@ -24,10 +24,10 @@ Three rules follow.
    20-cell meter; there are no ring gauges, KPI strips or big counters.
 3. A sheet, not a dashboard. Pages that describe a player or the app are sections down
    the page: a hairline across, the section's name in a 210 px column at the left, its
-   rows and controls at the right, no numbers in front of the names. Where a tile is
-   still used (the Studio, the install page) it is `--tile` with a 1 px edge and radius
-   6–10; no gradients, inner highlights, light from above, halos or status dots. Labels
-   are sentence case at 12.5–13 px, never letter-spaced mono capitals.
+   rows and controls at the right, no numbers in front of the names. Lists (files, builds,
+   channels, checks) are ruled rows, not cards; a dialog is the only panel. No gradients,
+   inner highlights, light from above, halos or status dots, and no small heading over a
+   page's title. Labels are sentence case at 12.5–13 px, never letter-spaced mono capitals.
 
 Controls follow the same print. A choice between a few values is a row of words with the
 chosen one underlined in ink, not a pill. A tag is a plain word, several are joined by
@@ -107,14 +107,22 @@ sits beside the version at the foot with its note on hover.
   then the sections Output, Power, Storage, Music, System, Hardware, Connection. Under
   1100 px a section's name sits above its body.
 - Settings: the same sections (theme, language, tools, about).
-- Library: the source switch (this computer, each player), the title and a line of
-  counts, the folders; a sticky toolbar with Albums/SensMe, quality tabs, search and sort;
-  a 190 px+ cover grid with hover actions. Album details and Send open as centred dialogs.
-- Firmware Studio: the title and lead with Add files, then one panel per kit (the player
-  at the left, a bay per file, "1 of 3 needed files" as a line) and the vault below. Once
+- Library: the source switch (this computer, each player) as words underlined in ink,
+  the title and a line of counts, the folders as plain paths; a sticky toolbar with
+  Albums/SensMe (the larger words, ruled off), quality tabs, search and sort; a 190 px+
+  cover grid with hover actions, a player's copy named in a word under the format. Album
+  details and Send open as centred dialogs.
+- SensMe: the title, a paragraph and the analysed share as a 20-cell meter; Time of day
+  and Mood as sections, a line per channel (its mark in the channel's colour drawn toward
+  the ink, name, gloss, three sleeves, the count). An opened channel lists its tracks.
+- Firmware Studio: the title and lead with Add files, then one section per kit (the player
+  at the left, a line per file with its format as a word, "1 of 3 needed files" as a
+  line), the builds and the vault as ruled rows below. Once
   a kit has a finished set its main button is Install. A build that ends opens a large
   sheet over whatever page is open: the player, the filled step strip, the rows of the
   set and Install.
+- Install: the player and its hands-on guide at the left, the checks, the route and the
+  confirmation as ruled sections at the right.
 
 ## Motion
 

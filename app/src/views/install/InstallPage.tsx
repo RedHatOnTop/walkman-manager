@@ -422,7 +422,6 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
     <div className="page install">
       <header className="install-hero">
         <div className="page-titles">
-          <span className="eyebrow">{t(restoring ? "install.eyebrow.restore" : "install.eyebrow")}</span>
           <h1 className="page-title">{t(restoring ? "install.title.restore" : "install.title", { name })}</h1>
           {record && (
             <p className="install-build">
@@ -447,7 +446,7 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
       </header>
 
       <div className="install-grid">
-        <section className="install-stage tile" aria-label={t("install.stageLabel")}>
+        <section className="install-stage" aria-label={t("install.stageLabel")}>
           {scene === "story" ? (
             <Storyboard key={storySteps === SETUP ? "setup" : storySteps === BACK ? "back" : "reach"} steps={storySteps} art={art} />
           ) : (
@@ -472,21 +471,21 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
           )}
 
           {!job && restarting && (
-            <div className="tile install-card">
+            <div className="install-card">
               <h2 className="install-card-title">{t("install.restarting")}</h2>
               <p className="install-card-text">{t("install.restarting.text")}</p>
             </div>
           )}
 
           {!job && !restarting && !device && (
-            <div className="tile install-card">
+            <div className="install-card">
               <h2 className="install-card-title">{t("install.none.title")}</h2>
               <p className="install-card-text">{t(drive ? "install.drive.none.text" : "install.none.text")}</p>
             </div>
           )}
 
           {!job && !restarting && device && !reachable && (
-            <div className="tile install-card">
+            <div className="install-card">
               <h2 className="install-card-title">{t(`install.mode-${device.mode}` as StringKey)}</h2>
               <p className="install-card-text">{t(`install.mode-${device.mode}.text` as StringKey)}</p>
             </div>
@@ -494,7 +493,7 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
 
           {!job && !restarting && plan && view && (
             <>
-              <div className="tile install-card">
+              <div className="install-card">
                 <p className="install-card-text">
                   {drive
                     ? t(`install.drive.mode.${plan.mode}.text` as StringKey)
@@ -509,7 +508,7 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
                 </ul>
               </div>
 
-              <div className="tile install-card">
+              <div className="install-card">
                 <h2 className="install-card-title">{t("install.plan")}</h2>
                 <ol className="route route--plan">
                   {rows(plan.stages).map((r) => {
@@ -548,7 +547,7 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
                 </p>
               </div>
 
-              <div className={`tile install-card install-go${plan.erases ? " is-erasing" : ""}`}>
+              <div className={`install-card install-go${plan.erases ? " is-erasing" : ""}`}>
                 {plan.erases && (
                   <label className="install-ack">
                     <input type="checkbox" checked={backedUp} onChange={(e) => setBackedUp(e.target.checked)} />
@@ -580,7 +579,7 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
           )}
 
           {job && (
-            <div className={`tile install-card install-now install-now--${job.state}`} aria-live="polite">
+            <div className={`install-card install-now install-now--${job.state}`} aria-live="polite">
               {running && current && (
                 <>
                   <span className="eyebrow">{t("install.stepOf", { n: job.index + 1, m: job.stages.length })}</span>
@@ -699,13 +698,13 @@ export function InstallPage({ build, go }: { build: string; go(r: Route): void }
           )}
 
           {job && (
-            <div className="tile install-card">
+            <div className="install-card">
               <RouteList job={job} now={now} />
             </div>
           )}
 
           {job && job.log.length > 0 && (
-            <details className="install-log tile">
+            <details className="install-log install-card">
               <summary>{t("install.log")}</summary>
               <pre className="mono selectable">{job.log.join("\n")}</pre>
             </details>

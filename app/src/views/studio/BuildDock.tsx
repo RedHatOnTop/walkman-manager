@@ -320,7 +320,7 @@ export function Builds({ view, go, onView, onError }: { view: StudioView; go(r: 
           const size = files ? Object.values(files).reduce((a, f) => a + f.bytes, 0) : 0;
           const date = when(r.started, lang);
           return (
-            <article key={r.id} className={`tile build build--${r.outcome.kind}`}>
+            <article key={r.id} className={`build build--${r.outcome.kind}`}>
               <div className="build-main">
                 <span className="build-date num">{date}</span>
                 <span className="build-tags">

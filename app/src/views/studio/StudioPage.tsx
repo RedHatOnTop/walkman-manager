@@ -11,7 +11,7 @@ import { useData } from "../../state/data";
 import { artFor } from "../../state/describe";
 import { ErrorText } from "../../components/ErrorText";
 
-const PLATE: Record<FormatKind, string> = {
+const FORMAT: Record<FormatKind, string> = {
   sonyNwwm: "UPG",
   sonyUpg: "UPG",
   otaPayload: "OTA",
@@ -40,12 +40,11 @@ function host(url: string): string {
   }
 }
 
-/** A cartridge with the format on its label; dashed while its slot is empty. */
-function Plate({ kind, state }: { kind: FormatKind; state: "empty" | "filled" | "bad" }) {
+/** The file's format as the short word a spec sheet prints beside it. */
+function FormatWord({ kind, state }: { kind: FormatKind; state: "empty" | "filled" | "bad" }) {
   return (
-    <span className={`plate plate--${state}`} aria-hidden="true">
-      <span className="plate-notch" />
-      <span className="plate-label mono">{PLATE[kind]}</span>
+    <span className={`fmt fmt--${state} mono`} aria-hidden="true">
+      {FORMAT[kind]}
     </span>
   );
 }
@@ -66,7 +65,7 @@ function Bay({ input, file, busy, onFetch, onOpen, onOpenInput }: { input: KitIn
   const kind = filledBy?.format ?? first?.format ?? input.formats[0]?.kind ?? "unknown";
   return (
     <div className={`bay${file ? " is-filled" : ""}${input.optional ? " is-optional" : ""}`}>
-      <Plate kind={kind} state={file ? "filled" : "empty"} />
+      <FormatWord kind={kind} state={file ? "filled" : "empty"} />
       <div className="bay-text">
         <span className="bay-role">
           {t(`studio.input.${input.id}` as StringKey)}
@@ -139,7 +138,7 @@ function KitBench({
   const required = kit.inputs.filter((i) => !i.optional);
   const have = required.filter((i) => i.filledBy).length;
   return (
-    <article className={`tile kit${kit.ready ? " is-ready" : ""}`}>
+    <article className={`kit${kit.ready ? " is-ready" : ""}`}>
       <div className="kit-object">
         {art && <DeviceRender art={art} scale={2.3} screen={{ kind: "off" }} />}
       </div>
@@ -190,8 +189,8 @@ function VaultTile({ f, view, busy, onRemove, onLook }: { f: VaultFile; view: St
   const note = fileNote(f, view.catalog, view.kits, t, lang);
   const bad = note.tone === "warn";
   return (
-    <div className={`tile vfile${bad ? " is-bad" : ""}`}>
-      <Plate kind={f.format.kind} state={bad ? "bad" : known || note.tone === "ok" ? "filled" : "empty"} />
+    <div className={`vfile${bad ? " is-bad" : ""}`}>
+      <FormatWord kind={f.format.kind} state={bad ? "bad" : known || note.tone === "ok" ? "filled" : "empty"} />
       <div className="vfile-text">
         <span className="vfile-title">
           {known?.title[lang] ??
@@ -235,7 +234,7 @@ function Working({ p, title, onStop }: { p: StudioProgress; title: string | unde
   const { t, lang } = usePrefs();
   const pct = p.total > 0 ? percent(p.done, p.total) : 0;
   return (
-    <div className="tile studio-work" aria-live="polite">
+    <div className="studio-work" aria-live="polite">
       <Icon name={p.fetching ? "download" : "firmware"} size={20} />
       <div className="studio-work-text">
         <span className="studio-work-title">
@@ -339,7 +338,6 @@ export function StudioPage({ go }: { go(r: Route): void }) {
     <div className="page studio">
       <header className="studio-hero">
         <div className="page-titles">
-          <span className="eyebrow">{t("studio.eyebrow")}</span>
           <h1 className="page-title">{t("studio.title")}</h1>
           <p className="studio-lead">{t("studio.lead")}</p>
         </div>

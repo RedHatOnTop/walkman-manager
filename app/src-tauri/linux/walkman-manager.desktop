@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name={{name}}
+GenericName=Walkman manager
+GenericName[ko]=워크맨 관리
+{{#if comment}}
+Comment={{comment}}
+{{/if}}
+Comment[ko]=Sony Walkman 플레이어를 위해 커뮤니티가 만든 비공식 관리 앱
+Keywords=Walkman;Sony;music;SensMe;Android;
+Keywords[ko]=워크맨;소니;음악;센스미;안드로이드;
+Exec={{exec}}
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}

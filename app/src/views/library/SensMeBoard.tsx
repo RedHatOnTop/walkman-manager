@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { asError, bridge } from "../../api/bridge";
 import type { Album, AnalysisPlan, EngineView, ErrorReport, SensMe, Track } from "../../api/types";
 import { Cover } from "../../components/Cover";
@@ -91,46 +91,24 @@ function covers(list: Track[], albumOf: Map<string, Album>, n: number): { key: s
   return out;
 }
 
-function DaySegment({ ch, list, albumOf, open }: { ch: number; list: Track[]; albumOf: Map<string, Album>; open(): void }) {
+/** A channel as a line of the sheet: its mark, name and gloss, how many tracks, a few sleeves. */
+function ChannelRow({ ch, list, albumOf, open }: { ch: number; list: Track[]; albumOf: Map<string, Album>; open(): void }) {
   const t = useT();
   return (
-    <button className={`sm-day-seg ch-${ch}`} onClick={open} disabled={list.length === 0}>
-      <Glyph ch={ch} size={30} />
-      <span className="sm-day-name">{t(channelKey("ch", ch))}</span>
-      <span className="sm-day-gloss">{t(channelKey("gloss", ch))}</span>
-      <span className="sm-day-foot">
-        <span className="sm-count num">{t("sensme.tracks", { n: list.length.toLocaleString() })}</span>
-        <span className="sm-sleeves" aria-hidden="true">
-          {covers(list, albumOf, 3).map((c) => (
-            <span key={c.key} className="sm-sleeve">
-              <Cover art={c.art} title={c.title} />
-            </span>
-          ))}
-        </span>
+    <button className={`sm-ch ch-${ch}`} onClick={open} disabled={list.length === 0}>
+      <Glyph ch={ch} size={22} />
+      <span className="sm-ch-text">
+        <span className="sm-ch-name">{t(channelKey("ch", ch))}</span>
+        <span className="sm-ch-gloss">{t(channelKey("gloss", ch))}</span>
       </span>
-    </button>
-  );
-}
-
-function MoodTile({ ch, list, albumOf, open }: { ch: number; list: Track[]; albumOf: Map<string, Album>; open(): void }) {
-  const t = useT();
-  return (
-    <button className={`sm-mood ch-${ch}`} onClick={open} disabled={list.length === 0}>
-      <span className="sm-mood-glyph">
-        <Glyph ch={ch} size={34} />
+      <span className="sm-ch-thumbs" aria-hidden="true">
+        {covers(list, albumOf, 3).map((c) => (
+          <span key={c.key} className="sm-thumb">
+            <Cover art={c.art} title={c.title} />
+          </span>
+        ))}
       </span>
-      <span className="sm-mood-name">{t(channelKey("ch", ch))}</span>
-      <span className="sm-mood-gloss">{t(channelKey("gloss", ch))}</span>
-      <span className="sm-mood-foot">
-        <span className="sm-count num">{t("sensme.tracks", { n: list.length.toLocaleString() })}</span>
-        <span className="sm-sleeves" aria-hidden="true">
-          {covers(list, albumOf, 3).map((c) => (
-            <span key={c.key} className="sm-sleeve">
-              <Cover art={c.art} title={c.title} />
-            </span>
-          ))}
-        </span>
-      </span>
+      <span className="sm-ch-count num">{t("sensme.tracks", { n: list.length.toLocaleString() })}</span>
     </button>
   );
 }
@@ -185,6 +163,7 @@ function TrackRows({ list, albumOf, current, onOpenAlbum }: { list: Track[]; alb
                 ) : (
                   others.map((c) => (
                     <span key={c} className={`sm-chip ch-${c}`}>
+                      <Glyph ch={c} size={13} />
                       {t(channelKey("ch", c))}
                     </span>
                   ))
@@ -219,15 +198,15 @@ function Detail({ ch, list, albumOf, onBack, onOpenAlbum }: { ch: number; list: 
   return (
     <div className={`sm-detail ch-${ch}`}>
       <div className="sm-detail-head">
-        <span className="sm-detail-glyph">
-          <Glyph ch={ch} size={56} />
-        </span>
         <div className="sm-detail-what">
           <button className="sm-back" onClick={onBack}>
             <Icon name="chevron" size={15} />
             {t("sensme.back")}
           </button>
-          <h2>{t(channelKey("ch", ch))}</h2>
+          <h2>
+            <Glyph ch={ch} size={30} />
+            {t(channelKey("ch", ch))}
+          </h2>
           <p>{t(channelKey("gloss", ch))}</p>
         </div>
         <div className="sm-detail-facts num">
@@ -264,7 +243,6 @@ function PlayerRead({ player, unread }: { player: MusicPlayer; unread: number })
   const pct = mine && mine.total > 0 ? (mine.done / mine.total) * 100 : 0;
   return (
     <div className="sm-notice">
-      <Icon name="usb" size={20} />
       <div className="sm-notice-text">
         {result && !running ? (
           <>
@@ -315,19 +293,6 @@ function PlayerRead({ player, unread }: { player: MusicPlayer; unread: number })
   );
 }
 
-/** Twelve tones round a circle; lit up to `lit` of twelve. */
-function ToneRing({ lit, spin }: { lit: number; spin?: boolean }) {
-  return (
-    <svg className={`sm-tones${spin ? " is-spinning" : ""}`} width={46} height={46} viewBox="0 0 48 48" aria-hidden="true">
-      {Array.from({ length: 12 }, (_, i) => {
-        const a = ((i * 30 - 90) * Math.PI) / 180;
-        const r = i % 2 === 0 ? 4.2 : 3.2;
-        return <circle key={i} cx={24 + 17 * Math.cos(a)} cy={24 + 17 * Math.sin(a)} r={r} className={`sm-tone ch-${[5, 8, 11, 12, 6, 7, 9, 10][i % 8]}${i < lit ? " is-lit" : ""}`} />;
-      })}
-    </svg>
-  );
-}
-
 /** The SensMe analysis of the tracks that have none, made here and written into the files. */
 function AnalyseHere({ player, missing }: { player?: MusicPlayer; missing: number }) {
   const t = useT();
@@ -369,7 +334,6 @@ function AnalyseHere({ player, missing }: { player?: MusicPlayer; missing: numbe
     const pct = p && p.totalBytes > 0 ? percent(p.doneBytes, p.totalBytes) : 0;
     return (
       <div className="sm-notice sm-make">
-        <ToneRing lit={r ? (r.cancelled ? Math.round((r.copied / Math.max(total, 1)) * 12) : 12) : Math.round((pct / 100) * 12)} spin={!r} />
         <div className="sm-notice-text">
           {r ? (
             <>
@@ -430,7 +394,6 @@ function AnalyseHere({ player, missing }: { player?: MusicPlayer; missing: numbe
   if (engine && !engine.engine) {
     return (
       <div className="sm-notice sm-make sm-make--engine">
-        <ToneRing lit={0} />
         <div className="sm-notice-text">
           <h3>{t("sensme.make.engineTitle", { n: missing.toLocaleString() })}</h3>
           <p>{t("sensme.make.engineBody")}</p>
@@ -469,7 +432,6 @@ function AnalyseHere({ player, missing }: { player?: MusicPlayer; missing: numbe
     const others = plan.others.reduce((n, o) => n + o.tracks, 0);
     return (
       <div className="sm-notice sm-make sm-make--plan">
-        <ToneRing lit={12} />
         <div className="sm-notice-text">
           <h3 className="num">{plan.tracks > 0 ? t("sensme.make.planTitle", { n: plan.tracks.toLocaleString() }) : t("sensme.make.nothing")}</h3>
           {plan.tracks > 0 && (
@@ -523,7 +485,6 @@ function AnalyseHere({ player, missing }: { player?: MusicPlayer; missing: numbe
 
   return (
     <div className="sm-notice sm-make">
-      <ToneRing lit={0} />
       <div className="sm-notice-text">
         <h3 className="num">{t("sensme.make.title", { n: missing.toLocaleString() })}</h3>
         <p>{t("sensme.make.body")}</p>
@@ -552,11 +513,6 @@ function TableNeeded() {
   const [error, setError] = useState<ErrorReport | null>(null);
   return (
     <div className="sm-notice sm-notice--table">
-      <span className="sm-notice-mark" aria-hidden="true">
-        {[0, 1, 2, 3].map((i) => (
-          <Glyph key={i} ch={[1, 3, 5, 9][i]!} size={18} />
-        ))}
-      </span>
       <div className="sm-notice-text">
         <h3>{t("sensme.table.title")}</h3>
         <p>{t("sensme.table.body")}</p>
@@ -643,16 +599,17 @@ export function SensMeBoard({
     <section className="sensme" ref={top}>
       <header className="sm-head">
         <div>
-          <span className="eyebrow mono">{t("sensme.eyebrow")}</span>
           <h2 className="sm-title">{t("sensme.title")}</h2>
           <p className="sm-lede">{t("sensme.lede")}</p>
         </div>
         {tracks.length > 0 && (
           <div className="sm-coverage">
-            <span className="sm-coverage-ring" style={{ "--pct": `${(all.length / tracks.length) * 100}%` } as CSSProperties}>
-              <span className="mono num">{Math.round((all.length / tracks.length) * 100)}%</span>
-            </span>
             <span className="num">{t("sensme.coverage", { n: all.length.toLocaleString(), total: tracks.length.toLocaleString() })}</span>
+            <span className="meter-cells" aria-hidden="true">
+              {Array.from({ length: 20 }, (_, i) => (
+                <i key={i} className={i < Math.round((all.length / tracks.length) * 20) ? "is-on" : undefined} />
+              ))}
+            </span>
           </div>
         )}
       </header>
@@ -687,20 +644,24 @@ export function SensMeBoard({
         <Detail ch={open} list={channels.get(open) ?? []} albumOf={albumOf} onBack={() => setOpen(null)} onOpenAlbum={onOpenAlbum} />
       ) : (
         <>
-          <h3 className="sm-group">{t("sensme.group.time")}</h3>
-          <div className="sm-day">
-            {TIME.map((c) => (
-              <DaySegment key={c} ch={c} list={channels.get(c)!} albumOf={albumOf} open={() => setOpen(c)} />
-            ))}
-          </div>
-          <h3 className="sm-group">{t("sensme.group.mood")}</h3>
-          <div className="sm-moods">
-            {MOOD.map((c) => (
-              <MoodTile key={c} ch={c} list={channels.get(c)!} albumOf={albumOf} open={() => setOpen(c)} />
-            ))}
-          </div>
-          <p className="sm-foot">
-            <Icon name="info" size={14} />
+          {(
+            [
+              ["time", TIME],
+              ["mood", MOOD],
+            ] as const
+          ).map(([group, chs]) => (
+            <section key={group} className="sec sm-sec">
+              <header className="sec-head">
+                <h3 className="sec-title">{t(`sensme.group.${group}`)}</h3>
+              </header>
+              <div className="sec-body sm-chs">
+                {chs.map((c) => (
+                  <ChannelRow key={c} ch={c} list={channels.get(c)!} albumOf={albumOf} open={() => setOpen(c)} />
+                ))}
+              </div>
+            </section>
+          ))}
+          <p className="footnote sm-foot">
             {t("sensme.deviceNote")}
             {partial > 0 && <span> {t("sensme.partial", { n: partial })}</span>}
           </p>

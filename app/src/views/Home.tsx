@@ -103,9 +103,8 @@ function Shelf({ go }: { go(route: Route): void }) {
             </span>
           )}
         </div>
-        <button className="btn btn--ghost" onClick={() => go({ kind: "library" })}>
+        <button className="shelf-open" onClick={() => go({ kind: "library" })}>
           {t("home.shelfOpen")}
-          <Icon name="chevron" size={16} />
         </button>
       </header>
       {albums.length === 0 ? (
@@ -167,7 +166,6 @@ export function Home({ go }: { go(route: Route): void }) {
     <div className="page home">
       <header className="page-head">
         <div className="page-titles">
-          <span className="eyebrow">{t("home.eyebrow")}</span>
           <h1 className="page-title">{n === 0 ? t("home.title") : n === 1 ? t("home.subtitle.one") : t("home.subtitle.many", { n })}</h1>
         </div>
       </header>

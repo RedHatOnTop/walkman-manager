@@ -1,4 +1,4 @@
-/* Firmware Studio: kits as benches with a bay per file, files as cartridges. */
+/* Firmware Studio: each kit a section of the sheet, a line per file it takes. */
 
 .studio-hero {
   display: flex;
@@ -23,99 +23,48 @@
   margin-top: 4px;
 }
 
-/* The cartridge ------------------------------------------------------------ */
-
-.plate {
-  position: relative;
-  flex: none;
-  display: inline-flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 44px;
-  height: 56px;
-  padding-bottom: 7px;
-  border-radius: 6px 12px 6px 6px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+/* A file's format, as the short word beside it. */
+.fmt {
+  width: 40px;
+  padding-top: 2px;
+  font-size: 11px;
+  color: var(--text-4);
 }
 
-.plate-notch {
-  position: absolute;
-  top: 7px;
-  left: 8px;
-  right: 8px;
-  height: 18px;
-  border-radius: 3px;
+.fmt--filled {
+  color: var(--text-2);
 }
 
-.plate--filled {
-  color: #1a1d24;
-  background: linear-gradient(165deg, #f1f3f7 0%, #c9ced8 55%, #9ea5b2 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
-    0 6px 14px -6px rgba(0, 0, 0, 0.55);
+.fmt--bad {
+  color: var(--warn);
 }
-
-.plate--filled .plate-notch {
-  background: repeating-linear-gradient(90deg, rgba(20, 23, 30, 0.22) 0 2px, transparent 2px 5px);
-}
-
-.plate--empty {
-  color: var(--text-3);
-  box-shadow: inset 0 0 0 1px var(--line-3);
-  background: transparent;
-  outline: 1px dashed var(--line-3);
-  outline-offset: 3px;
-}
-
-.plate--empty .plate-notch {
-  box-shadow: inset 0 0 0 1px var(--line-2);
-}
-
-.plate--bad {
-  color: #2a2208;
-  background: linear-gradient(165deg, #f7e6a8 0%, var(--warn) 70%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 14px -6px rgba(0, 0, 0, 0.5);
-}
-
-.plate--bad .plate-notch {
-  background: repeating-linear-gradient(135deg, rgba(42, 34, 8, 0.28) 0 3px, transparent 3px 7px);
-}
-
-/* Kits --------------------------------------------------------------------- */
 
 .studio-kits {
   display: flex;
   flex-direction: column;
-  gap: 18px;
   margin-bottom: 44px;
 }
 
 .kit {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  padding: 0;
-  overflow: hidden;
-  border-radius: var(--r-5);
+  grid-template-columns: 250px minmax(0, 1fr);
+  column-gap: 40px;
+  border-top: 1px solid var(--line-3);
 }
 
 .kit-object {
   position: relative;
   display: grid;
-  place-items: center;
-  min-height: 300px;
-  overflow: hidden;
-  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.16));
-  box-shadow: inset -1px 0 0 var(--line);
+  align-content: start;
+  justify-items: center;
+  padding-top: 34px;
 }
 
 .kit-body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 26px 28px 26px;
+  padding: 20px 0 40px;
   min-width: 0;
 }
 
@@ -159,35 +108,22 @@
 }
 
 .kit-bays {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line-2);
 }
 
 .bay {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr auto;
-  column-gap: 14px;
-  row-gap: 14px;
-  padding: 16px;
-  border-radius: var(--r-4);
-  box-shadow: inset 0 0 0 1px var(--line-2);
-  transition: background var(--slow) var(--ease), box-shadow var(--slow) var(--ease);
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
 }
 
-.bay.is-filled {
-  background: rgba(232, 236, 245, 0.035);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), inset 0 0 0 1px var(--line-2);
-}
-
-.bay.is-optional:not(.is-filled) {
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-
-.bay.is-optional:not(.is-filled) .bay-file,
-.bay.is-optional:not(.is-filled) .plate {
-  opacity: 0.6;
+.bay.is-optional:not(.is-filled) .bay-file {
+  color: var(--text-2);
 }
 
 .bay-text {
@@ -201,17 +137,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11.5px;
-  font-weight: 650;
-  letter-spacing: 0.02em;
+  font-size: 12.5px;
   color: var(--text-3);
 }
 
 .bay-file {
-  font-size: 14.5px;
-  font-weight: 680;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.4;
 }
 
 .bay-why {
@@ -229,10 +162,11 @@
 }
 
 .bay-act {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  min-height: 30px;
+  justify-content: flex-end;
+  max-width: 300px;
+  min-height: 28px;
 }
 
 .bay-act .btn {
@@ -268,6 +202,9 @@
   align-items: center;
   gap: 18px;
   margin-bottom: 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line-3);
+  border-bottom: 1px solid var(--line);
   padding: 16px 20px;
 }
 
@@ -347,19 +284,16 @@
 .vault-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  border-top: 1px solid var(--line-2);
 }
 
 .vfile {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 18px;
-  padding: 14px 18px;
-}
-
-.vfile.is-bad {
-  box-shadow: var(--tile-shine), 0 0 0 1px var(--warn-wash), inset 3px 0 0 var(--warn);
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .vfile-text {
@@ -370,8 +304,8 @@
 }
 
 .vfile-title {
-  font-size: 14.5px;
-  font-weight: 680;
+  font-size: 14px;
+  font-weight: 650;
 }
 
 .vfile-path {
@@ -407,9 +341,8 @@
 }
 
 .vfile-size {
-  font-size: 17px;
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-size: 14px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -540,8 +473,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 20px;
-  box-shadow: inset 0 1px 0 var(--line);
+  padding-top: 4px;
 }
 
 .dock-rows {
@@ -564,25 +496,20 @@
   place-items: center;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  color: var(--text-3);
+  color: var(--text-4);
 }
 
 .dock-row--ok .dock-mark {
-  background: rgba(232, 236, 245, 0.1);
   color: var(--text-1);
 }
 
 .dock-row--bad .dock-mark {
-  background: var(--warn-wash);
   color: var(--warn);
 }
 
 .dock-label {
-  font-size: 12px;
-  font-weight: 650;
-  letter-spacing: 0.02em;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--text-3);
 }
 
@@ -712,23 +639,19 @@
 /* Going back to stock: the kit's other way, quieter than a build. */
 .dock-back {
   display: grid;
-  grid-template-columns: 30px 1fr auto;
+  grid-template-columns: 22px 1fr auto;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: var(--r-3);
-  background: var(--bg-hover);
-  box-shadow: inset 0 0 0 1px var(--line);
+  gap: 12px;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
 }
 
 .dock-back-mark {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  color: var(--text-2);
+  width: 22px;
+  height: 22px;
+  color: var(--text-3);
 }
 
 .dock-back-text {
@@ -843,7 +766,7 @@
 .build-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  border-top: 1px solid var(--line-2);
 }
 
 .build {
@@ -851,11 +774,8 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px 18px;
-  padding: 14px 18px;
-}
-
-.build--failed {
-  box-shadow: var(--tile-shine), 0 0 0 1px var(--warn-wash), inset 3px 0 0 var(--warn);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .build-main {
@@ -867,9 +787,8 @@
 }
 
 .build-date {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 650;
-  letter-spacing: -0.01em;
 }
 
 .build-tags {
@@ -908,8 +827,8 @@
 
 .build-size {
   margin-right: 8px;
-  font-size: 15px;
-  font-weight: 650;
+  font-size: 14px;
+  font-weight: 600;
   white-space: nowrap;
 }
 

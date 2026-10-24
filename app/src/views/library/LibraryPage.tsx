@@ -479,7 +479,6 @@ export function LibraryPage({ source: initial, view: initialView }: { source?: s
   if (onPc) {
     hero = (
       <>
-        <span className="eyebrow">{t("library.eyebrow")}</span>
         <h1 className="lib-title">{t("library.title")}</h1>
         <Stats albums={albums} tracks={index?.tracks.length ?? 0} />
         <div className="lib-hero-actions">
@@ -518,7 +517,6 @@ export function LibraryPage({ source: initial, view: initialView }: { source?: s
     const perRoot = (index?.roots ?? []).map((r, i) => ({ root: r, n: index!.tracks.filter((tr) => tr.root === i).length }));
     hero = (
       <>
-        <span className="eyebrow">{t("library.player.eyebrow")}</span>
         <h1 className="lib-title">{player?.name}</h1>
         <Stats albums={albums} tracks={index?.tracks.length ?? 0} />
         <div className="lib-hero-actions">

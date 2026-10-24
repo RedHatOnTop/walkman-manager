@@ -36,13 +36,13 @@
   min-height: 640px;
   padding: 44px 24px 30px;
   overflow: hidden;
-  border-radius: var(--r-5);
+  border-top: 1px solid var(--line-3);
 }
 
 .install-side {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -54,12 +54,13 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding: 16px 0 22px;
+  border-top: 1px solid var(--line-3);
 }
 
 .install-card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 650;
-  letter-spacing: -0.02em;
 }
 
 .install-card-text {
@@ -159,18 +160,14 @@
   place-items: center;
   width: 26px;
   height: 26px;
-  border-radius: 50%;
-  background: var(--bg-3);
-  color: var(--text-3);
+  color: var(--text-4);
 }
 
 .gate--ok .gate-mark {
-  background: rgba(232, 236, 245, 0.1);
   color: var(--text-1);
 }
 
 .gate--closed .gate-mark {
-  background: var(--warn-wash);
   color: var(--warn);
 }
 
@@ -340,7 +337,7 @@
 
 /* Going ahead: the acknowledgement, the typed word and the one orange button. */
 .install-go.is-erasing {
-  box-shadow: var(--tile-shine), 0 0 0 1px var(--danger-wash), inset 3px 0 0 var(--danger);
+  border-top-color: var(--danger);
 }
 
 .install-ack {
@@ -418,7 +415,7 @@
 }
 
 .install-now--failed {
-  box-shadow: var(--tile-shine), 0 0 0 1px var(--warn-wash), inset 3px 0 0 var(--warn);
+  border-top-color: var(--warn);
 }
 
 .install-meter {
