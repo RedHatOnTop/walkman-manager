@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Ultimate Walkman Manager",
+  "mainBinaryName": "walkman-manager",
+  "version": "0.1.0",
+  "identifier": "dev.personnya.walkman-manager",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:1430",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Ultimate Walkman Manager",
+        "width": 1360,
+        "height": 880,
+        "minWidth": 1080,
+        "minHeight": 700,
+        "backgroundColor": "#0d0d0f"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data: blob: art: http://art.localhost; style-src 'self' 'unsafe-inline'; font-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["appimage", "rpm", "deb"],
+    "category": "Music",
+    "shortDescription": "Manager for Sony Walkman players",
+    "longDescription": "A desktop manager for Sony Walkman players: live device state, music sync, and a Firmware Studio that builds Android 13 for the NW-ZX500 series from the owner's own firmware and installs it over fastboot. Not made by or affiliated with Sony.\n\nSony Walkman 플레이어를 위한 데스크톱 관리 도구입니다. 기기 상태, 음악 동기화, 그리고 소유자의 펌웨어로 NW-ZX500 시리즈용 Android 13을 만들어 fastboot로 설치하는 펌웨어 스튜디오가 들어 있습니다. Sony가 만들거나 Sony와 관련된 프로그램이 아닙니다.",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.png"],
+    "linux": {
+      "deb": {
+        "depends": ["android-sdk-platform-tools-common"],
+        "recommends": ["adb", "fastboot", "e2fsprogs", "patchelf", "python3", "openjdk-17-jre-headless | java17-runtime-headless", "curl", "unzip", "zip", "xz-utils", "binutils", "openssl"]
+      },
+      "rpm": {
+        "recommends": ["android-tools", "e2fsprogs", "patchelf", "python3", "java-headless", "curl", "unzip", "zip", "xz", "binutils", "openssl"]
+      }
+    }
+  }
+}

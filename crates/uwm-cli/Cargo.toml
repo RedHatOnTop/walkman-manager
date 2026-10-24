@@ -1,0 +1,16 @@
+[package]
+name = "uwm-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "uwm"
+path = "src/main.rs"
+
+[dependencies]
+uwm-core.workspace = true
+serde_json.workspace = true
+dirs.workspace = true

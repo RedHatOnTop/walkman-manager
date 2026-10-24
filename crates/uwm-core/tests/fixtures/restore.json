@@ -1,0 +1,67 @@
+{
+  "kit": "nw-zx500-android13",
+  "commit": "62d4c1c6893ae37ceedf06794ad687d37a27752c",
+  "dirty": false,
+  "variant": "stock",
+  "root": false,
+  "model": "NW-ZX500",
+  "firmware": "4.06.00",
+  "series": "0000",
+  "slot": "b",
+  "files": {
+    "vbmeta.img": {
+      "bytes": 4096,
+      "sha256": "3669ca5c0dc2aa28789dcfe6910536d47b15a27ffb1f7197e3b03c8362c45102"
+    },
+    "boot.img": {
+      "bytes": 50331648,
+      "sha256": "922d1e878ca6fd7ff61f99ca251fab0c944ba0b602e64c54c3dc84ecdef57ca2"
+    },
+    "system.img": {
+      "bytes": 3145728000,
+      "sha256": "2a3db28862e38e60f77119dd36e60654e652e55ccaa138933b44b79039f813f0"
+    },
+    "vendor.img": {
+      "bytes": 209715200,
+      "sha256": "be305cf1e263c1624f00ef757644c2aaa7e1341748978964760a10d788fb8c6d"
+    }
+  },
+  "flash": [
+    {
+      "partition": "vbmeta_b",
+      "file": "vbmeta.img"
+    },
+    {
+      "partition": "boot_b",
+      "file": "boot.img"
+    },
+    {
+      "partition": "system_b",
+      "file": "system.img"
+    },
+    {
+      "partition": "vendor_b",
+      "file": "vendor.img"
+    }
+  ],
+  "after": {
+    "kernel": "Linux version 4.14.78-g69dd21e (slave@99f7f681bda5) (gcc version 4.9.x 20150123 (prerelease) (GCC)) #1 SMP PREEMPT Wed Oct 20 06:42:01 UTC 2021",
+    "check": [
+      {
+        "path": "/system/framework/services.jar",
+        "sha256": "1c16f5976318fadcf7add92c518a93896f99e2a78f742b7347d8539103264882"
+      },
+      {
+        "path": "/system/framework/framework-res.apk",
+        "sha256": "b1517b696cf4f9ae21cad6e106ebb59e4655e91367bad36641c8053d1028b01c"
+      },
+      {
+        "path": "/system/priv-app/SystemUI/SystemUI.apk",
+        "sha256": "f925718a593e630ab33529b329da4a129afb923939abab381c36b27d71ac7409"
+      }
+    ],
+    "absent": [
+      "/system/etc/init/zx507-audio.rc"
+    ]
+  }
+}

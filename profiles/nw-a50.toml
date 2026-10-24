@@ -1,0 +1,59 @@
+id = "nw-a50"
+family = "NW-A50 Series"
+art = "a50"
+soc = "MediaTek MT8590"
+dac = "Sony CXD3778GF S-Master HX"
+ram_mb = 512
+body_mm = [55.7, 97.3, 10.8]
+display = "3.1-inch WVGA 800 × 480"
+mass_g = 99
+stock_os = "Walkman OS (Linux 3.10)"
+stock_firmware_latest = "1.02"
+recovery = ["sony-upg", "mtk-brom"]
+
+[[variants]]
+model = "NW-A55"
+storage_gb = 16
+
+[[variants]]
+model = "NW-A56"
+storage_gb = 32
+
+[[variants]]
+model = "NW-A57"
+storage_gb = 64
+
+# Every key in one rule must match; any rule matching identifies the profile.
+[[identify]]
+"ro.model.number" = "NW-A50Series"
+
+[[identify]]
+"ro.hardware" = "icx"
+"ro.product.model" = "HAGOROMO_MODEL"
+
+[[usb]]
+vid = 0x054c
+pid = 0x0bc1
+seen = "stock firmware 1.02 with ADB enabled: mass storage + ADB"
+
+[[usb]]
+vid = 0x0e8d
+pid = 0x0003
+seen = "MediaTek boot ROM (MT8590 hwcode 0x8590); entry with the player off: hold Volume Down + Play, then connect USB"
+
+# Sony's own music app, from the Help Guide's "Supported formats". Upper sample rate per
+# codec; DSD rates are one-bit rates (11.2896 MHz = DSD256).
+[playback]
+max_file_bytes = 4294967296
+
+[playback.codecs]
+mp3 = 48000
+wma = 48000
+aac = 48000
+flac = 384000
+wav = 384000
+alac = 384000
+aiff = 384000
+ape = 192000
+dsf = 11289600
+dff = 11289600

@@ -1,0 +1,288 @@
+/* Home: players on a lit stage --------------------------------------------- */
+
+.stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(32px, 6vw, 110px);
+  min-height: 600px;
+  margin: 0 -44px 34px;
+  padding: 36px 44px 40px;
+  overflow: hidden;
+}
+
+.player {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 38px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.player-stand {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  height: 450px;
+}
+
+.player .r3d {
+  transition: transform 700ms var(--ease);
+}
+
+.player:hover .r3d {
+  transform: translateY(-8px);
+}
+
+.player:hover .r3d.is-turned {
+  --rx: -9deg;
+  --ry: -34deg;
+}
+
+.player-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-name {
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.player-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.player-os {
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.player-os::before {
+  content: "·";
+  margin-right: 8px;
+  color: var(--text-4);
+}
+
+.player-state--warn .player-mode {
+  color: var(--warn);
+}
+
+.player-state--rescue .player-mode {
+  color: var(--danger);
+}
+
+.specs.player-spec {
+  grid-template-columns: minmax(0, 1fr);
+  width: 300px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.player-spec .spec {
+  grid-template-columns: 82px minmax(0, 1fr);
+  padding: 7px 0;
+}
+
+/* One player: the render left, the name large beside it. */
+
+.stage--1 {
+  justify-content: center;
+  gap: 90px;
+}
+
+.player.is-solo {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 80px;
+  text-align: left;
+}
+
+.player.is-solo .player-caption {
+  align-items: flex-start;
+  padding-bottom: 60px;
+}
+
+.player.is-solo .player-name {
+  font-size: 46px;
+}
+
+.player.is-solo .player-spec {
+  width: 360px;
+  margin-top: 28px;
+}
+
+/* No player yet */
+
+.stage--empty {
+  align-items: center;
+  gap: 80px;
+  min-height: 560px;
+}
+
+.stage-ghosts {
+  display: flex;
+  align-items: flex-end;
+  gap: 34px;
+  opacity: 0.5;
+  filter: saturate(0.6);
+}
+
+.stage-empty-text {
+  max-width: 460px;
+}
+
+.stage-empty-text h2 {
+  margin-bottom: 10px;
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.stage-empty-text p {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.empty-hints {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.empty-hints li {
+  display: flex;
+  gap: 12px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+
+.empty-hints svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--signal);
+}
+
+/* Library shelf */
+
+.shelf {
+  padding: 26px 28px 30px;
+  border-radius: var(--r-5);
+  background: var(--tile);
+  box-shadow: var(--tile-shine), 0 0 0 1px var(--tile-edge);
+}
+
+.shelf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.shelf-head > div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.shelf-title {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+
+.shelf-count {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.shelf-empty {
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+.shelf-row {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.shelf-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  text-align: left;
+  animation: rise var(--slow) var(--ease) both;
+  animation-delay: calc(var(--i) * 40ms);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.shelf-cover {
+  aspect-ratio: 1;
+  margin-bottom: 6px;
+  border-radius: var(--r-2);
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+  transition: transform var(--slow) var(--ease);
+}
+
+.shelf-item:hover .shelf-cover {
+  transform: translateY(-3px);
+}
+
+.shelf-name {
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shelf-artist {
+  font-size: 12px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1240px) {
+  .readouts {
+    gap: 18px;
+    padding: 12px 18px;
+  }
+  .readout + .readout {
+    padding-left: 18px;
+  }
+  .shelf-row {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .shelf-item:nth-child(n + 7) {
+    display: none;
+  }
+}

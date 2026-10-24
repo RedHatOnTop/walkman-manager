@@ -1,0 +1,60 @@
+{
+  "kit": "nw-a50-android5",
+  "commit": "0000000000000000000000000000000000000000",
+  "dirty": false,
+  "firmware": "bbdmp2-20190731",
+  "files": {
+    "wmmod-android/boot/android-boot.sh": {
+      "bytes": 41269,
+      "sha256": "90560eb7f838be0e5c03e27fbfd496aed2187c3f0e91718eb9fd0b6828a1b0ba"
+    },
+    "wmmod-android/boot/pivotinit": {
+      "bytes": 621896,
+      "sha256": "0295b5f0dd7e327d1903abc05f346686dcfd1f0c0f68231dfaf27b16b4bd4584"
+    },
+    "wmmod-android/boot/wifi/wlan_mt_bp.ko": {
+      "bytes": 1311592,
+      "sha256": "ff0f78674f61d825e371ecd9a1533b03121ad57ba7d5a54e42762fd42155721a"
+    },
+    "wmmod-android/boot/MANIFEST": {
+      "bytes": 637,
+      "sha256": "4622892ef7c34fd0957d7b5244ab229595b51e9b4938993d8e4587b7efcad599"
+    },
+    "wmmod-android/fire-system.img": {
+      "bytes": 724381696,
+      "sha256": "611245aba228e5d8e8907a5ef94c25381122fe4258998df5a6b167f5c2b67976"
+    },
+    "wmmod-android/android-data.img": {
+      "bytes": 2097152000,
+      "sha256": "5e67649d92d4324d222b0157283b69e4cbc6177e9ef7b1428d07162c747bdbb2"
+    },
+    "NW_WM_FW.UPG": {
+      "bytes": 12368,
+      "sha256": "33beed17de71bfb5f841cca0428ea5706fb3be218d9e659316180d5d5dae8a74"
+    }
+  },
+  "copy": [
+    "wmmod-android/boot/android-boot.sh",
+    "wmmod-android/boot/pivotinit",
+    "wmmod-android/boot/wifi/wlan_mt_bp.ko",
+    "wmmod-android/boot/MANIFEST",
+    "wmmod-android/fire-system.img",
+    "wmmod-android/android-data.img",
+    "NW_WM_FW.UPG"
+  ],
+  "keep": [
+    "wmmod-android/android-data.img"
+  ],
+  "upg": {
+    "file": "NW_WM_FW.UPG",
+    "key": "w1",
+    "recovery": "1093dbee3723ad6f145d3ffa28b76679b5ac8cd957bf891c070eafdc3690c7e2"
+  },
+  "after": {
+    "log": "PICKERUPG.log",
+    "expect": [
+      "hook md5 9e86b9772b897b2c467685f427c0d474",
+      "====== PICKER UPG DONE ======"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+# Android 13 on the NW-ZX500 series: TrebleDroid's GSI on Sony's vendor image and our kernel.
+# The image steps are walkman-zx507's build kit; the Studio downloads that repository at
+# `commit` as it published it and runs `entry` in it (docs/firmware-studio.md).
+id = "nw-zx500-android13"
+profile = "nw-zx500"
+
+[source]
+repository = "walkman-zx507"
+commit = "80ee7921a8a59e09ee90ddcb89eb673072dbcc24"
+entry = "scripts/make-install.sh"
+args = ["input:stock", "key", "input:gsi", "input:kernel", "stock"]
+archive = { url = "https://github.com/RedHatOnTop/walkman-zx507/releases/download/kit-80ee7921a8a5/walkman-zx507-80ee7921a8a5.tar.gz", bytes = 523840, sha256 = "9866a74eafbeee61e8b34fc80c4632c45f8d0ae023013f432a43f3385f6a1777" }
+# Going back to stock: Sony's four partitions out of the owner's UPG, for slot b as they came.
+restore = { entry = "scripts/make-restore.sh", args = ["input:stock", "key", "stock"] }
+
+# What the kit runs on the owner's computer, besides coreutils.
+[host]
+tools = ["bash", "tar", "debugfs", "dumpe2fs", "e2fsck", "resize2fs", "patchelf", "python3", "java", "curl", "unzip", "zip", "xz", "ar", "openssl"]
+java = 17
+# The stock partitions, one install set and the build's work copies.
+free_gb = 16
+
+[[input]]
+id = "gsi"
+accepts = ["td-ci-20230905-arm64-ab-vanilla-xz", "td-ci-20230905-arm64-ab-vanilla"]
+
+# Sony apps, the vendor image, the stock boot image and vbmeta come out of this.
+[[input]]
+id = "stock"
+accepts = ["nw-zx500-0000-4.06.00"]
+
+# walkman-zx507's published kernel, or one built by its kernel/build.sh from Sony's GPL
+# source; the vendor's modules load only into this release string.
+[[input]]
+id = "kernel"
+accepts = ["zx507-kernel-4.14.78-1"]
+formats = [{ kind = "kernelImage", release = "4.14.78-g69dd21e" }]
+guide = { en = "a-kernel-for-the-nw-zx500", ko = "nw-zx500용-커널" }
+
+# Only for building the kernel.
+[[input]]
+id = "gpl"
+accepts = ["nw-zx500-gpl-4.06"]
+optional = true
+
+# Google's build-tools, which the kit downloads, come under this licence; the kit asks for
+# the owner's agreement in ANDROID_SDK_LICENSE.
+[licence]
+id = "android-sdk-license"
+from = "https://dl.google.com/android/repository/repository2-3.xml"
+env = "ANDROID_SDK_LICENSE"
+
+[install]
+# A file only this kit's builds have: it tells an update from a first install.
+marker = "/system/etc/init/zx507-audio.rc"

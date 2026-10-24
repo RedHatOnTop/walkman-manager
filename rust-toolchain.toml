@@ -1,0 +1,6 @@
+# The compiler the burst containers build with, so the packages come from the same one each
+# time; rustup installs it there (scripts/burst).
+[toolchain]
+channel = "1.99.1"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

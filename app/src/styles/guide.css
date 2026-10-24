@@ -1,0 +1,678 @@
+/* The install guide: the player's screen at each step, and the hands-on parts around it. */
+
+/* Screens ------------------------------------------------------------------ */
+
+.gd-bg {
+  fill: #101217;
+}
+
+.gd-home {
+  fill: #07080b;
+}
+
+.gd-stroke {
+  fill: none;
+  stroke: #e9ebf0;
+  stroke-linecap: round;
+}
+
+.gd-lit {
+  fill: var(--signal);
+  opacity: 0.12;
+}
+
+.gd-track {
+  fill: #3a3e48;
+  transition: fill 260ms var(--ease);
+}
+
+.gd-track.is-on {
+  fill: var(--signal);
+  opacity: 0.55;
+}
+
+.gd-knob {
+  fill: #c8ccd4;
+  transition: cx 260ms var(--ease), fill 260ms var(--ease);
+}
+
+.gd-knob.is-on {
+  fill: var(--signal-strong);
+}
+
+.gd-scrim {
+  fill: #000;
+  opacity: 0.6;
+}
+
+/* The kit's first-run setup draws in its own colours (walkman-zx507 apps/setup Ui). */
+.gd-setup-text {
+  fill: #f2eee6;
+}
+
+.gd-setup-title {
+  font-weight: 300;
+}
+
+.gd-setup-dim {
+  fill: #8d887f;
+}
+
+.gd-setup-body {
+  color: #8d887f;
+}
+
+.gd-setup-gold {
+  fill: #c0a565;
+}
+
+.gd-setup-on-gold {
+  fill: #000;
+}
+
+.gd-setup-check {
+  fill: none;
+  stroke: #c0a565;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.gd-setup-mark {
+  fill: #2c2a27;
+}
+
+.gd-setup-mark.is-on {
+  fill: #c0a565;
+}
+
+.gd-setup-card {
+  fill: #141312;
+}
+
+.gd-setup-track {
+  fill: #2c2a27;
+  transition: fill 260ms var(--ease);
+}
+
+.gd-setup-track.is-on {
+  fill: #c0a565;
+  opacity: 0.5;
+}
+
+.gd-setup-knob {
+  fill: #b8b3aa;
+  transition: cx 260ms var(--ease), fill 260ms var(--ease);
+}
+
+.gd-setup-knob.is-on {
+  fill: #c0a565;
+}
+
+.gd-body {
+  margin: 0;
+  color: #aab0bd;
+  line-height: 1.45;
+  font-family: var(--font-sans);
+}
+
+.gd-toast {
+  fill: #2a2d36;
+}
+
+.gd-box {
+  fill: none;
+  stroke: #8b91a0;
+  stroke-width: 0.5;
+}
+
+.gd-box.is-on {
+  fill: var(--signal);
+  stroke: var(--signal);
+}
+
+.gd-check {
+  fill: none;
+  stroke: #160802;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.gd-check-disc {
+  fill: var(--signal);
+}
+
+/* The makers' logos stand as plain bars: they are Sony's marks, not this program's. */
+.gd-logo {
+  fill: #f4f5f8;
+}
+
+.gd-boot {
+  fill: #f4f5f8;
+  animation: boot-breathe 2.4s ease-in-out infinite;
+}
+
+.gd-boot-line {
+  fill: #2a2d36;
+}
+
+.gd-boot-sweep {
+  fill: #f4f5f8;
+  animation: boot-sweep 1.8s var(--ease) infinite;
+}
+
+/* The NW-A50 kit's picker: the stock settings list's black, white and greys. */
+.gd-pick-light {
+  font-weight: 300;
+}
+
+.gd-pick-off {
+  fill: #666;
+}
+
+.gd-pick-rule {
+  fill: #999;
+}
+
+.gd-pick-row {
+  fill: #333;
+  transition: y 260ms var(--ease);
+}
+
+.gd-pick-radio {
+  fill: none;
+  stroke: #fff;
+}
+
+.gd-pick-dot {
+  fill: #fff;
+}
+
+/* The kit's own Android: OLED black with champagne gold, as on the unit. */
+.gd-search {
+  fill: #222222;
+}
+
+.gd-wave {
+  fill: #c9a85a;
+  opacity: 0.55;
+}
+
+.gd-dock-music {
+  fill: #e9c254;
+}
+
+.gd-dock-app {
+  fill: #f4f1ea;
+}
+
+.gd-shade {
+  fill: #050505;
+  opacity: 0.97;
+}
+
+.gd-qs {
+  fill: #35322b;
+}
+
+.gd-qs-on {
+  fill: #e6c46a;
+}
+
+.gd-gear {
+  fill: none;
+  stroke: #f4f1ea;
+}
+
+.gd-swipe {
+  animation: swipe-down 1.5s var(--ease) both;
+}
+
+.gd-swipe-trail {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-linecap: round;
+}
+
+.gd-drop {
+  animation: shade-drop 0.45s var(--ease) both;
+}
+
+.gd-rec {
+  fill: transparent;
+}
+
+.gd-rec.is-on {
+  fill: #2f6fe0;
+}
+
+.gd-ring-track {
+  fill: none;
+  stroke: #2a2d36;
+}
+
+.gd-ring-fill {
+  fill: none;
+  stroke: var(--signal);
+  stroke-linecap: round;
+  animation: charge-fill 3s var(--ease) infinite;
+}
+
+.gd-tap {
+  pointer-events: none;
+}
+
+.gd-tap-ring {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 0.8;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tap-ring 520ms ease-out both;
+}
+
+.gd-tap-dot {
+  fill: #fff;
+  opacity: 0.85;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tap-dot 520ms ease-out both;
+}
+
+.gd-pop {
+  animation: pop 260ms var(--spring) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes tap-ring {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes tap-dot {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.95;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+}
+
+@keyframes swipe-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6%);
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(4%);
+  }
+}
+
+@keyframes shade-drop {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes boot-breathe {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes boot-sweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(120px);
+  }
+}
+
+@keyframes charge-fill {
+  from {
+    stroke-dashoffset: 999;
+  }
+}
+
+/* The stage ---------------------------------------------------------------- */
+
+.gstage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.gstage-body {
+  position: relative;
+  width: var(--gw);
+  height: var(--gh);
+  transition: transform 900ms var(--ease);
+}
+
+/* Square to the viewer, the body moves right to make room for the cable. */
+.gstage.is-flat .gstage-body {
+  transform: translateX(calc(var(--gs) * 22px));
+}
+
+.gstage-over {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.gstage-port {
+  fill: #000;
+}
+
+.gstage-cue {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 0.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cue 1.8s ease-out infinite;
+}
+
+.r3d-cue {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 0.45;
+  filter: drop-shadow(0 0 0.8px var(--signal));
+  animation: cue-fade 1.4s ease-in-out infinite;
+}
+
+/* Where to press: numbered labels right of the turned player, an arrow from each to its key. */
+.gstage.has-press .gstage-body {
+  transform: translateX(calc(var(--gs) * -30px));
+}
+
+.gstage-arrows {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.gstage-arrow-line {
+  fill: none;
+  stroke: var(--text-3);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.gstage-arrow-head {
+  fill: var(--text-3);
+}
+
+.gstage-arrow.is-on {
+  animation: press-push 800ms var(--ease) infinite;
+}
+
+.gstage-arrow.is-on .gstage-arrow-line {
+  stroke: var(--signal);
+}
+
+.gstage-arrow.is-on .gstage-arrow-head {
+  fill: var(--signal);
+}
+
+@keyframes press-push {
+  50% {
+    transform: translateX(-3px);
+  }
+}
+
+.gstage-tag {
+  position: absolute;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 9px;
+  align-items: center;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color var(--fast) var(--ease);
+}
+
+.gstage-tag-n {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line-3);
+  border-radius: 50%;
+  color: var(--text-3);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.gstage-tag-key {
+  color: var(--text-2);
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.gstage-tag-does {
+  color: var(--text-3);
+  font-size: 12.5px;
+}
+
+.gstage-tag.is-on .gstage-tag-n {
+  border-color: var(--signal);
+  background: var(--signal);
+  color: var(--on-signal);
+}
+
+.gstage-tag.is-on .gstage-tag-key {
+  color: var(--text-1);
+}
+
+@keyframes cue {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes cue-fade {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.gstage-cable {
+  fill: none;
+  stroke: #15171d;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+}
+
+.gstage-cable-hi {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 0.7;
+  transform: translate(-0.6px, -0.6px);
+}
+
+.gstage-data {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-dasharray: 2.2 7;
+  animation: data-run 900ms linear infinite;
+}
+
+@keyframes data-run {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 9.2;
+  }
+}
+
+.gstage-relief {
+  fill: #1c1f26;
+}
+
+.gstage-shell {
+  fill: #23262e;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 0.25;
+}
+
+.gstage-shell-hi {
+  fill: rgba(255, 255, 255, 0.07);
+}
+
+.gstage-tip {
+  fill: #a7adb8;
+}
+
+.gstage-plug.is-moving {
+  animation: plug-in 3.2s var(--ease) infinite;
+}
+
+@keyframes plug-in {
+  0%,
+  12% {
+    transform: translateX(-16px);
+  }
+  46%,
+  88% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-16px);
+  }
+}
+
+.gstage-keep-pill {
+  fill: var(--warn);
+}
+
+.gstage-keep-text {
+  fill: #2a2208;
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.gstage-keep-tail {
+  fill: none;
+  stroke: var(--warn);
+  stroke-width: 0.6;
+  stroke-linecap: round;
+}
+
+.gstage-keep {
+  animation: cue-fade 2.2s ease-in-out infinite;
+}
+
+.gstage-tray-plate {
+  fill: #2a2d35;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 0.25;
+}
+
+.gstage-card {
+  fill: #e9ebf0;
+  stroke: #9aa0aa;
+  stroke-width: 0.2;
+}
+
+.gstage-tray-lip {
+  fill: #2f323a;
+}
+
+.gstage-tray {
+  transform: translateX(17px);
+}
+
+.gstage-tray.is-out {
+  animation: tray-out 3.4s var(--ease) infinite;
+}
+
+@keyframes tray-out {
+  0%,
+  10% {
+    transform: translateX(17px);
+  }
+  45%,
+  85% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(17px);
+  }
+}
+
+.gstage-label {
+  max-width: 340px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-3);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gd-boot,
+  .gd-boot-sweep,
+  .gd-ring-fill,
+  .gd-tap-ring,
+  .gd-tap-dot,
+  .gd-pop,
+  .gd-swipe,
+  .gd-drop,
+  .gstage-cue,
+  .r3d-cue,
+  .gstage-arrow.is-on,
+  .gstage-data,
+  .gstage-keep {
+    animation: none;
+  }
+  .gstage-plug.is-moving {
+    animation: none;
+    transform: none;
+  }
+  .gstage-tray.is-out {
+    animation: none;
+    transform: none;
+  }
+}

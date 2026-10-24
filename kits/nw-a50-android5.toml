@@ -1,0 +1,40 @@
+# Android 5.1 on the NW-A50 series, as a container on the stock Walkman Linux: LineageOS
+# 12.1 for the Fire 7, our audio HAL and WalkmanUI (walkman-a55). The Sony assets and the
+# updater's key come from the owner's own player, through the backup walkman-a55's backup UPG
+# leaves on it.
+# Nothing is flashed: the set is copied onto the player's drive, and a UPG installs the boot
+# picker that starts it.
+id = "nw-a50-android5"
+profile = "nw-a50"
+set = "storage"
+
+[source]
+repository = "walkman-a55"
+commit = "be2268d2abe41b0f192fe54fcd619a8679339b19"
+entry = "kit/make-install.sh"
+args = ["input:backup", "input:rom", "input:fireos"]
+archive = { url = "https://github.com/RedHatOnTop/walkman-a55/releases/download/kit-be2268d2abe4/walkman-a55-be2268d2abe4.tar.gz", bytes = 1407729, sha256 = "b65cdc9a86019b9b43ba3f2c55a0f2c8e57b5fe6ff7a5afe5499a9160a969489" }
+variants = false
+
+# What the kit runs on the owner's computer, besides coreutils.
+[host]
+tools = ["bash", "python3", "debugfs", "dumpe2fs", "e2fsck", "resize2fs", "mke2fs", "unzip", "curl", "tar", "gzip"]
+python = ["PIL", "numpy", "cryptography"]
+# The system image, an empty 2 GB data image (sparse) and the work copies.
+free_gb = 6
+
+# The WMBACKUP folder's manifest.txt: every image beside it is read against the md5 the
+# player took when it wrote the backup.
+[[input]]
+id = "backup"
+formats = [{ kind = "wmBackup" }]
+guide = { en = "a-backup-of-your-nw-a50", ko = "nw-a50-백업" }
+
+[[input]]
+id = "rom"
+accepts = ["lineage-12.1-20200505-ford"]
+
+# Only the boot image is used: the container's init, healthd and ueventd rules.
+[[input]]
+id = "fireos"
+accepts = ["fireos-5.3.6.4-ford"]

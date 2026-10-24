@@ -1,0 +1,262 @@
+/* The player as an object -------------------------------------------------- */
+
+.r3d {
+  --rx: -7deg;
+  --ry: -26deg;
+  --view: perspective(2200px) rotateX(var(--rx)) rotateY(var(--ry));
+  position: relative;
+  isolation: isolate;
+  flex: none;
+  width: var(--w);
+  height: var(--h);
+}
+
+.r3d-obj {
+  position: absolute;
+  inset: 0;
+}
+
+/*
+ * Each face carries the whole view transform itself instead of sitting in a
+ * preserve-3d parent: WebKitGTK without accelerated compositing flattens
+ * preserve-3d, which collapses the side and top faces to nothing.
+ */
+.r3d-face {
+  position: absolute;
+  display: block;
+  overflow: visible;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  transition: transform 900ms var(--ease);
+}
+
+.r3d-front {
+  inset: 0;
+  width: var(--w);
+  height: var(--h);
+}
+
+.r3d.is-turned .r3d-front {
+  transform: var(--view) translateZ(calc(var(--d) / 2));
+}
+
+/* The side, top and corner faces are --bleed longer towards the front, moved so that the
+   extra runs on under the front face; the side and top run on under the corners at their ends
+   by --seam-top and --seam-bottom. */
+.r3d-right {
+  top: calc(var(--r-top) - var(--seam-top));
+  left: calc((var(--w) - var(--d) - var(--bleed)) / 2);
+  width: calc(var(--d) + var(--bleed));
+  height: calc(var(--h) - var(--r-top) - var(--r-bottom) + var(--seam-top) + var(--seam-bottom));
+  /* Turned about the body's centre like every other face, not its own: with unequal radii
+     the two differ. */
+  transform-origin: 50% calc(var(--h) / 2 - var(--r-top) + var(--seam-top));
+  transform:var(--view) rotateY(90deg) translateZ(calc(var(--w) / 2)) translateX(calc(var(--bleed) / -2));
+  filter: brightness(0.82);
+}
+
+.r3d-top {
+  left: calc(var(--r-top) - var(--seam-top));
+  top: calc((var(--h) - var(--d) - var(--bleed)) / 2);
+  width: calc(var(--w) - 2 * var(--r-top) + 2 * var(--seam-top));
+  height: calc(var(--d) + var(--bleed));
+  transform: var(--view) rotateX(90deg) translateZ(calc(var(--h) / 2)) translateY(calc(var(--bleed) / 2));
+  filter: brightness(1.12);
+}
+
+/* One strip of a rounded corner: moved to its place on the curve, turned to its normal.
+   Its left edge is the front edge. */
+.r3d-round {
+  left: calc((var(--w) - var(--d) - var(--bleed)) / 2);
+  top: calc((var(--h) - var(--c)) / 2);
+  width: calc(var(--d) + var(--bleed));
+  height: var(--c);
+  background: linear-gradient(90deg, var(--f-mid), var(--f-side) 14%, var(--f-hi) 34%, var(--f-side) 58%, var(--f-mid) 86%, var(--f-lo));
+  filter: brightness(var(--light));
+  transform: var(--view) translate3d(var(--x), var(--y), 0) rotateZ(var(--phi)) rotateY(90deg) translateX(calc(var(--bleed) / -2));
+}
+
+/* A soft pool of shade under the body and a tight dark line where it meets the floor. */
+.r3d-shadow {
+  position: absolute;
+  left: 2%;
+  right: -10%;
+  bottom: calc(var(--h) * -0.075);
+  height: calc(var(--h) * 0.11);
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, var(--floor), transparent 85%) 50% 50% / 100% 100% no-repeat,
+    radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent) 46% 38% / 78% 34% no-repeat;
+  z-index: -1;
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.r3d:not(.is-turned) .r3d-shadow {
+  left: 8%;
+  right: 8%;
+}
+
+/* The side's keys */
+.r3d-slot {
+  fill: rgba(0, 0, 0, 0.7);
+}
+
+.r3d-engrave {
+  fill: rgba(0, 0, 0, 0.5);
+  stroke: rgba(0, 0, 0, 0.5);
+}
+
+.r3d-engrave path[fill="none"] {
+  fill: none;
+}
+
+.r3d-dot {
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.r3d-screen .scr-off {
+  fill: #040506;
+}
+
+.r3d-lamp {
+  fill: #1a1b1f;
+}
+
+.r3d-lamp.is-on {
+  fill: #ff9a3c;
+}
+
+.r3d-jack {
+  fill: #2a2b30;
+}
+
+.r3d-jack.is-live {
+  fill: var(--signal);
+}
+
+/* What the player's screen shows */
+
+.r3d-screen text {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss06", "tnum";
+}
+
+.scr-mono {
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0.12em;
+}
+
+.scr-clock {
+  fill: #f4f5f8;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+}
+
+.scr-text {
+  fill: #e9ebf0;
+}
+
+.scr-bold {
+  font-weight: 700;
+}
+
+.scr-dim {
+  fill: #8b91a0;
+}
+
+.scr-accent {
+  fill: var(--signal-strong);
+}
+
+.scr-on-accent {
+  fill: #160802;
+}
+
+.scr-batt {
+  fill: none;
+  stroke: #8b91a0;
+}
+
+.scr-batt-fill {
+  fill: #e9ebf0;
+}
+
+.scr-batt-fill.is-charging {
+  fill: var(--signal);
+}
+
+.scr-batt-tip {
+  fill: #8b91a0;
+}
+
+.scr-dimmed {
+  fill: #0a0b0e;
+}
+
+.scr-card {
+  fill: #1e212a;
+}
+
+.scr-check {
+  fill: none;
+  stroke: #8b91a0;
+  stroke-width: 0.5;
+}
+
+.scr-allow {
+  fill: var(--signal);
+  animation: allow 1.6s var(--ease) infinite;
+}
+
+@keyframes allow {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.scr-black {
+  fill: #060708;
+}
+
+.scr-art {
+  fill: #1b1c20;
+}
+
+.scr-art-disc {
+  fill: none;
+  stroke: #2c2d33;
+}
+
+.scr-line {
+  fill: #d9dbe1;
+}
+
+.scr-line--dim {
+  fill: #5d6170;
+}
+
+.scr-track {
+  fill: #2a2c33;
+}
+
+.scr-progress {
+  fill: var(--signal);
+}
+
+.scr-keys {
+  fill: #d9dbe1;
+  stroke: #d9dbe1;
+  stroke-linecap: round;
+}
+
+.scr-spinner {
+  fill: none;
+  stroke: #8b91a0;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 1s linear infinite;
+}
+
+/* A spotlit stage for renders */

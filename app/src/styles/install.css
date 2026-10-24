@@ -1,0 +1,548 @@
+/* Installing a build: the player on a stage at the left, the plan and its progress at the right. */
+
+.install-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.install-build {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.install-commit {
+  color: var(--text-4);
+}
+
+.install-grid {
+  display: grid;
+  grid-template-columns: minmax(540px, 1fr) minmax(360px, 1fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.install-stage {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  place-items: center;
+  min-height: 640px;
+  padding: 44px 24px 30px;
+  overflow: hidden;
+  border-radius: var(--r-5);
+}
+
+.install-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.install-side .notice {
+  margin-bottom: 0;
+}
+
+.install-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.install-card-title {
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.install-card-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* The storyboard: the stage cycles through steps the owner can also pick. */
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+}
+
+.story-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: min(100%, 420px);
+}
+
+.story-step {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: start;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--r-3);
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-3);
+  transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.story-step:hover {
+  background: var(--bg-hover);
+  color: var(--text-2);
+}
+
+.story-step.is-on {
+  background: rgba(232, 236, 245, 0.06);
+  color: var(--text-1);
+}
+
+.story-n {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-3);
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--text-2);
+}
+
+.story-step.is-on .story-n {
+  background: var(--text-1);
+  color: var(--on-ink);
+}
+
+.gates,
+.route,
+.verdict,
+.story-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Gates: what must hold before an install may start. */
+.gates {
+  display: flex;
+  flex-direction: column;
+}
+
+.gate {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.gate:last-child {
+  box-shadow: none;
+}
+
+.gate-mark {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-3);
+  color: var(--text-3);
+}
+
+.gate--ok .gate-mark {
+  background: rgba(232, 236, 245, 0.1);
+  color: var(--text-1);
+}
+
+.gate--closed .gate-mark {
+  background: var(--warn-wash);
+  color: var(--warn);
+}
+
+.gate-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.gate-name {
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.gate-why {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+
+.gate--closed .gate-why {
+  color: var(--warn);
+}
+
+.gate-more {
+  grid-column: 2 / -1;
+}
+
+.btn.is-on {
+  background: var(--bg-press);
+  color: var(--text-1);
+}
+
+/* The route: each stage of the install as a stop on a line. */
+.route {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.route-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 34px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.route-stop::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line-2);
+}
+
+/* From and to the dot's middle, which sits in the first 34 px row even when a row holds more. */
+.route-stop:first-child::before {
+  top: 17px;
+}
+
+.route-stop:last-child::before {
+  bottom: calc(100% - 17px);
+}
+
+.route-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  border-radius: 50%;
+  background: var(--bg-1);
+  box-shadow: 0 0 0 2px var(--line-3);
+}
+
+/* A storage set's files, under the row that copies them: the dry run. */
+.route-files {
+  grid-column: 2 / -1;
+  margin: -4px 0 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-3);
+}
+
+.route-files summary {
+  cursor: pointer;
+  color: var(--text-2);
+}
+
+.route-files ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route-files li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  line-height: 1.9;
+  color: var(--text-2);
+}
+
+.route-files li.is-kept {
+  color: var(--text-3);
+}
+
+.route-stop--done {
+  color: var(--text-2);
+}
+
+.route-stop--done .route-dot {
+  background: var(--text-2);
+  box-shadow: 0 0 0 2px var(--text-2);
+}
+
+.route-stop--done::before {
+  background: var(--text-3);
+}
+
+.route-stop--now {
+  color: var(--text-1);
+  font-weight: 650;
+}
+
+.route-stop--now .route-dot {
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-wash), 0 0 14px var(--signal-line);
+  animation: route-now 1.6s var(--ease) infinite;
+}
+
+.route-stop--failed {
+  color: var(--warn);
+}
+
+.route-stop--failed .route-dot {
+  background: var(--warn);
+  box-shadow: 0 0 0 3px var(--warn-wash);
+}
+
+@keyframes route-now {
+  50% {
+    box-shadow: 0 0 0 6px var(--signal-wash), 0 0 18px var(--signal-line);
+  }
+}
+
+.route-time {
+  font-size: 12px;
+  color: var(--text-4);
+}
+
+.route-stop--now .route-time {
+  color: var(--text-2);
+}
+
+.install-total {
+  font-size: 12.5px;
+  color: var(--text-3);
+  text-align: right;
+}
+
+/* Going ahead: the acknowledgement, the typed word and the one orange button. */
+.install-go.is-erasing {
+  box-shadow: var(--tile-shine), 0 0 0 1px var(--danger-wash), inset 3px 0 0 var(--danger);
+}
+
+.install-ack {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.install-ack input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--danger);
+}
+
+.install-stock {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.install-stock .mono {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-4);
+  word-break: break-all;
+}
+
+.install-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.install-confirm input {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--r-2);
+  background: var(--bg-1);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 14px;
+  color: var(--text-1);
+}
+
+.install-confirm input::placeholder {
+  color: var(--text-4);
+}
+
+.install-confirm input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--signal-line), 0 0 0 3px var(--signal-wash);
+}
+
+.install-start {
+  height: 44px;
+  font-size: 14.5px;
+}
+
+/* The running job. */
+.install-now-title {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.install-now--done .install-now-title {
+  color: var(--text-1);
+}
+
+.install-now--failed {
+  box-shadow: var(--tile-shine), 0 0 0 1px var(--warn-wash), inset 3px 0 0 var(--warn);
+}
+
+.install-meter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.install-meter-bar {
+  position: relative;
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--bg-3);
+}
+
+.install-meter-bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--signal);
+  transition: width 400ms var(--ease);
+}
+
+.install-meter-bar > span.is-idle {
+  width: 30% !important;
+  animation: meter-idle 1.8s var(--ease) infinite;
+}
+
+@keyframes meter-idle {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(340%);
+  }
+}
+
+.install-meter-time {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.install-meter-time span {
+  color: var(--text-4);
+  font-weight: 500;
+}
+
+.install-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.install-hold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--warn);
+}
+
+.verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.verdict li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.verdict li.is-ok {
+  color: var(--text-2);
+}
+
+.verdict li.is-bad {
+  color: var(--warn);
+}
+
+.verdict .mono {
+  font-size: 11.5px;
+}
+
+.install-log summary {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.install-log pre {
+  max-height: 220px;
+  margin-top: 12px;
+  overflow: auto;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--text-3);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+@media (max-width: 1080px) {
+  .install-grid {
+    grid-template-columns: 1fr;
+  }
+  .install-stage {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brun-strip span.is-now,
+  .route-stop--now .route-dot,
+  .install-meter-bar > span.is-idle {
+    animation: none;
+  }
+}

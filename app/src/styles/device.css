@@ -1,0 +1,663 @@
+/* Device page: the player spotlit beside its name, details in tiles below. */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(36px, 5vw, 84px);
+  min-height: 500px;
+  margin: 0 0 34px;
+  padding-top: 12px;
+}
+
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding-top: 18px;
+}
+
+.hero-object {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  padding: 0 40px;
+}
+
+.hero-object--unknown {
+  width: 220px;
+  height: 360px;
+  place-items: center;
+  border-radius: var(--r-5);
+  color: var(--text-4);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.hero-drawing {
+  padding: 4px 0 0;
+  animation: page-in var(--slow) var(--ease);
+}
+
+.segmented--small {
+  padding: 3px;
+}
+
+.segmented--small button {
+  height: 28px;
+  padding: 0 14px;
+  font-size: 12.5px;
+}
+
+.hero-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding-bottom: 8px;
+}
+
+.hero-name {
+  margin: 6px 0 12px;
+  font-size: clamp(40px, 4.2vw, 58px);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.hero-state {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+
+.hero-state--warn .hero-mode {
+  color: var(--warn);
+}
+
+.hero-state--rescue .hero-mode {
+  color: var(--danger);
+}
+
+.hero-mode {
+  font-weight: 550;
+}
+
+.hero-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.specs.hero-spec {
+  grid-template-columns: minmax(0, 1fr);
+  width: min(520px, 100%);
+  margin: 28px 0 30px;
+}
+
+.hero-spec--loading {
+  width: min(520px, 100%);
+  height: 168px;
+  margin: 30px 0;
+  border-radius: var(--r-2);
+  background: linear-gradient(100deg, var(--bg-1) 30%, var(--bg-2) 50%, var(--bg-1) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+.hero-info > .notice {
+  max-width: 620px;
+  margin: 34px 0 6px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn--large {
+  height: 42px;
+  padding: 0 20px;
+  font-size: 14.5px;
+}
+
+.btn.is-spinning svg {
+  animation: spin 0.9s linear infinite;
+}
+
+.hero-ago {
+  margin-left: 8px;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+/* The drawing needs its callouts' width; the info column gives way. */
+.hero.is-drawing {
+  grid-template-columns: auto minmax(280px, 1fr);
+}
+
+.hero.is-drawing .hero-name {
+  font-size: clamp(40px, 4vw, 56px);
+}
+
+/* The drawing's callouts already carry the readouts. */
+.hero.is-drawing .hero-spec {
+  display: none;
+}
+
+.hero.is-drawing .hero-state {
+  margin-bottom: 36px;
+}
+
+@media (max-width: 1180px) {
+  .hero,
+  .hero.is-drawing {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+  .hero-info {
+    align-items: center;
+    text-align: center;
+  }
+  .hero-spec {
+    text-align: left;
+  }
+}
+
+/* Tiles ------------------------------------------------------------------- */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.bento > .sec--output {
+  grid-column: span 7;
+}
+
+.bento > .sec--power {
+  grid-column: span 5;
+}
+
+.bento > .sec--storage,
+.bento > .sec--music {
+  grid-column: span 6;
+}
+
+.bento > .sec--system {
+  grid-column: 1 / -1;
+}
+
+.bento-stack {
+  display: contents;
+}
+
+.bento-stack > .sec {
+  grid-column: span 6;
+}
+
+.bento > .skeleton {
+  grid-column: span 5;
+  height: 260px;
+}
+
+.bento > .skeleton--wide {
+  grid-column: span 7;
+}
+
+@media (max-width: 1100px) {
+  .bento > .sec,
+  .bento > .skeleton,
+  .bento-stack > .sec {
+    grid-column: 1 / -1;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(100deg, var(--bg-1) 30%, var(--bg-2) 50%, var(--bg-1) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -150% 0;
+  }
+}
+
+.sec {
+  min-width: 0;
+  padding: 22px 26px 26px;
+}
+
+.sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  margin-bottom: 18px;
+}
+
+.sec-aside {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sec-title {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-2);
+}
+
+.sec-note {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* Output ------------------------------------------------------------------ */
+
+.out-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 0 0 18px;
+  font-size: 15px;
+  color: var(--text-2);
+}
+
+.out-word {
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.out-line.is-live .out-word,
+.out-line.is-live .num {
+  color: var(--signal);
+}
+
+/* The signal path, source to jack, read left to right. */
+.chain {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.chain li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 22px 10px 0;
+}
+
+.chain li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: 6px;
+  top: 10px;
+  color: var(--text-4);
+}
+
+.chain-name {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.chain-sub {
+  font-size: 12.5px;
+  color: var(--text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chain.is-live li:not(:last-child)::after {
+  color: var(--signal);
+}
+
+.pcm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.pcm-label {
+  color: var(--text-3);
+}
+
+.pcm-token {
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.pcm-token--off {
+  color: var(--text-4);
+}
+
+.pcm-token--live {
+  color: var(--signal);
+}
+
+.sec--power .power {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Battery level as a row of cells, the way a charger or an amp shows it. */
+.meter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.meter-figure {
+  min-width: 76px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.meter-cells {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(20, minmax(0, 1fr));
+  gap: 3px;
+  height: 10px;
+}
+
+.meter-cells i {
+  border-radius: 1px;
+  background: var(--bg-3);
+}
+
+.meter-cells i.is-on {
+  background: var(--text-2);
+}
+
+.meter.is-charging .meter-cells i.is-on {
+  background: var(--signal);
+}
+
+.meter.is-low .meter-cells i.is-on {
+  background: var(--warn);
+}
+
+.vols {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.vol-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vol-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.vol-name svg {
+  color: var(--text-3);
+}
+
+.vol-total {
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.vol-free {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.vol-free-value {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.vol-free-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.vol--absent .vol-name {
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.bar {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-3);
+  overflow: hidden;
+}
+
+.bar--split {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--bg-hover);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.bar--split span {
+  min-width: 3px;
+  transition: width var(--slow) var(--ease);
+}
+
+.bar-music,
+.key-music {
+  background: var(--text-1);
+}
+
+.bar-other,
+.key-other {
+  background: var(--text-4);
+}
+
+.vol-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.vol-legend i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  border-radius: 2px;
+}
+
+/* Music -------------------------------------------------------------------- */
+
+.music-vols {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.music-vol {
+  display: flex;
+  flex-direction: column;
+}
+
+.music-vol-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.music-vol-root {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.music-vol-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.music-vol-n {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.music-vol-unit {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.music-vol-size {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.music-vol .sec-note {
+  margin-top: 10px;
+}
+
+.music-mix {
+  display: flex;
+  gap: 2px;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.music-mix span {
+  min-width: 3px;
+}
+
+.music-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.music-legend i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 2px;
+  vertical-align: 0;
+}
+
+.music-matched {
+  color: var(--text-3);
+}
+
+/* Specs: a spec sheet, label and value on one hairline row, in as many columns as fit. */
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  column-gap: 36px;
+  margin: 0;
+  border-top: 1px solid var(--line-2);
+}
+
+.spec {
+  display: grid;
+  grid-template-columns: minmax(92px, 38%) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.spec dt {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.spec dd {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.spec dd.mono {
+  font-size: 13px;
+  font-weight: 450;
+}
+
+.spec.is-live dd {
+  color: var(--signal);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.inline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.serial {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

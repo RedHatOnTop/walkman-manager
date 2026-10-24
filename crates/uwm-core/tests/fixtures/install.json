@@ -1,0 +1,67 @@
+{
+  "kit": "nw-zx500-android13",
+  "commit": "5bbccc698a7242911c58fe09f79e46cc98581945",
+  "dirty": true,
+  "variant": "release",
+  "root": false,
+  "model": "NW-ZX500",
+  "firmware": "4.06.00",
+  "series": "0000",
+  "slot": "b",
+  "files": {
+    "system.img": {
+      "bytes": 2997698560,
+      "sha256": "0449aa53fa7446c99ea3b63cb3593ecd6a017238538f2e3b2efaebde38064045"
+    },
+    "boot.img": {
+      "bytes": 50331648,
+      "sha256": "3dcfedff6ee958f7a90f9801460a1f7ad6150b2f85056017e5b67ad1c8460735"
+    },
+    "vbmeta.img": {
+      "bytes": 4096,
+      "sha256": "3669ca5c0dc2aa28789dcfe6910536d47b15a27ffb1f7197e3b03c8362c45102"
+    }
+  },
+  "flash": [
+    {
+      "partition": "vbmeta_b",
+      "file": "vbmeta.img",
+      "flags": [
+        "--disable-verity",
+        "--disable-verification"
+      ]
+    },
+    {
+      "partition": "boot_b",
+      "file": "boot.img"
+    },
+    {
+      "partition": "system_b",
+      "file": "system.img"
+    }
+  ],
+  "after": {
+    "kernel": "Linux version 4.14.78-g69dd21e (builder@host) (gcc version 4.9.x 20150123 (prerelease) (GCC)) #1 SMP PREEMPT Thu Oct 15 08:58:55 UTC 2026",
+    "check": [
+      {
+        "path": "/system/framework/services.jar",
+        "sha256": "5a793adc14edb3871a951fefeba785380f06654ef226fc9641ccd9dd76103fcb"
+      },
+      {
+        "path": "/system/framework/framework-res.apk",
+        "sha256": "a3abe037b8973c2fa85b2283ca563b04eb6102224e9f738f22ed7b5e892abdcd"
+      },
+      {
+        "path": "/system/system_ext/priv-app/SystemUI/SystemUI.apk",
+        "sha256": "48719ce884a135cd26e7acd70e44ef4cfdf8c020f9e1a19bd7489ee14082dc75"
+      },
+      {
+        "path": "/system/system_ext/etc/build.prop",
+        "sha256": "030aea4178a174675cb66c0e693602472b75d67f31d55fc3aedeb828758eee6b"
+      }
+    ],
+    "absent": [
+      "/system/xbin/su"
+    ]
+  }
+}

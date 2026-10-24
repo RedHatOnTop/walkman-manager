@@ -1,0 +1,44 @@
+id = "nw-zx500"
+family = "NW-ZX500 Series"
+art = "zx500"
+soc = "NXP i.MX 8M Mini"
+dac = "Sony CXD3778GF S-Master HX"
+ram_mb = 4096
+body_mm = [57.9, 122.6, 14.8]
+display = "3.6-inch HD 1280 × 720"
+mass_g = 164
+stock_os = "Android 9"
+recovery = ["fastboot"]
+
+[[variants]]
+model = "NW-ZX505"
+storage_gb = 16
+
+[[variants]]
+model = "NW-ZX507"
+storage_gb = 64
+
+[[identify]]
+"ro.boot.hardware" = "icx1295"
+
+[[usb]]
+vid = 0x054c
+pid = 0x0cf2
+seen = "Android 13 GSI with ADB enabled"
+
+# Sony's own music app, from the Help Guide's "Supported formats". Upper sample rate per
+# codec; DSD rates are one-bit rates (11.2896 MHz = DSD256).
+[playback]
+max_file_bytes = 4294967296
+
+[playback.codecs]
+mp3 = 48000
+wma = 48000
+aac = 48000
+flac = 384000
+wav = 384000
+alac = 384000
+aiff = 384000
+ape = 192000
+dsf = 11289600
+dff = 11289600

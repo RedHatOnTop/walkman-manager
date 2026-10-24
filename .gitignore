@@ -1,0 +1,8 @@
+/target/
+/out/
+/app/src-tauri/gen/
+__pycache__/
+# Generated from the user's own MMLib11.dll by scripts/re/gen_models.py; it mirrors the
+# engine's model code, so it stays on the machine like the DLL itself.
+/scripts/re/tt_models.py
+/.public-deny
