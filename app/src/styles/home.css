@@ -178,7 +178,7 @@
 .empty-hints svg {
   flex: none;
   margin-top: 2px;
-  color: var(--signal);
+  color: var(--text-3);
 }
 
 /* Library shelf */

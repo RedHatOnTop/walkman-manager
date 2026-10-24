@@ -27,7 +27,7 @@ const ko = {
   "link.mtk-preloader": "MediaTek Preloader",
   "link.nxp-serial-download": "NXP 시리얼 다운로드",
 
-  "home.title": "기기",
+  "home.title": "플레이어",
   "home.subtitle.one": "Walkman 1대가 연결되어 있습니다",
   "home.subtitle.many": "Walkman {n}대가 연결되어 있습니다",
   "home.open": "열기",
@@ -1044,7 +1044,7 @@ const en: Record<StringKey, string> = {
   "link.mtk-preloader": "MediaTek Preloader",
   "link.nxp-serial-download": "NXP serial download",
 
-  "home.title": "Devices",
+  "home.title": "Players",
   "home.subtitle.one": "One Walkman is connected",
   "home.subtitle.many": "{n} Walkman players are connected",
   "home.open": "Open",
