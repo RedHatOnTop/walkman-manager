@@ -55,8 +55,30 @@ download mode.
   firmware versions, have not been tried; the NW-ZX500 build takes only 4.06.00, series
   0000, on purpose.
 - **Other systems.** Linux only. Windows and macOS are planned, not started.
-- **Updates and releases.** There is no updater and no release package yet; build it from
-  source below.
+- **The packages on players.** The deb, rpm and AppImage were installed and opened on fresh
+  Ubuntu 24.04 and Fedora 44 virtual machines, with no player attached. The flows above ran
+  from the author's own build of the same code.
+- **Updates.** There is no updater: a new version is a new package from the Releases page.
+
+## Install
+
+Packages for x86-64 Linux are on the
+[Releases](https://github.com/RedHatOnTop/walkman-manager/releases) page, with a
+`SHA256SUMS` file to check them against.
+
+```sh
+# Ubuntu 22.04 or newer, Debian
+sudo apt install ./walkman-manager_0.1.0_amd64.deb
+# Fedora
+sudo dnf install ./walkman-manager-0.1.0-1.x86_64.rpm
+# Any other distribution
+chmod +x walkman-manager_0.1.0_amd64.AppImage && ./walkman-manager_0.1.0_amd64.AppImage
+```
+
+The package is called `ultimate-walkman-manager` and the program `walkman-manager`. The deb
+and rpm pull in WebKitGTK 4.1 and GTK 3, and recommend the distribution's adb and fastboot.
+The AppImage carries WebKitGTK itself but takes the desktop's own graphics and font
+libraries (Mesa, HarfBuzz), which any desktop install has.
 
 ## Build
 
