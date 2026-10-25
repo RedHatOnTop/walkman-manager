@@ -194,6 +194,6 @@ Before the repository goes public (it is private on GitHub until then):
   renders draw no marks), and the app's About, the README and the packages' descriptions say
   it is unofficial, community-made and not made or endorsed by Sony.
 - ~~The first release~~: 0.1.0's deb, rpm and AppImage built from the exported tree, tried on
-  fresh Ubuntu 24.04 and Fedora 44 VMs, and waiting as a draft pre-release on the public
-  repository (2026-10-25). It is published when the repository is flipped.
-- The flip itself: the user's word.
+  fresh Ubuntu 24.04 and Fedora 44 VMs, published as v0.1.0 at the export they were built
+  from (2026-10-25).
+- ~~The flip~~: `RedHatOnTop/walkman-manager` is public since 2026-10-25 (the user's word).
